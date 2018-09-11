@@ -1,0 +1,206 @@
+\documentclass[12pt,a4paper]{paper}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{amsfonts}
+\usepackage{multicol}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage[left=1cm,right=1cm,top=1.5cm,bottom=2cm]{geometry}
+\usepackage{Sweave}
+\begin{document}
+\title{GENE638 - Homework 2\\\small{Daniel Osorio - dcosorioh@tamu.edu\\Department of Veterinary Integrative Biosciences\\Texas A\&M University}}
+\maketitle
+\input{HW2_DanielOsorio-concordance}
+\begin{enumerate}
+\item For this system of equations:\[\left[\begin{array}{ccc}1 & 0 & 1 \\ 0 & 2 & 2 \\ 1 & 2 & 3\end{array}\right]\left[\begin{array}{c}x_{1} \\ x_{2} \\ x_{3}\end{array}\right]=\left[\begin{array}{c}5 \\ 20 \\ 25\end{array}\right]\]
+\begin{enumerate}
+\item Determine the rank of the coefficient matrix
+\begin{Schunk}
+\begin{Sinput}
+> as.numeric(Matrix::rankMatrix(coefficientMatrix))
+\end{Sinput}
+\begin{Soutput}
+[1] 2
+\end{Soutput}
+\end{Schunk}
+\item Express any linearly dependent columns in the matrix form $\left[\begin{array}{c}A_{12}\\A_{22}\end{array}\right]=\left[\begin{array}{c}A_{11}\\A'_{12}\end{array}\right]L$
+\item Find a generalized inverse of the coefficient matrix. Prove that it is a generalized inverse
+\begin{Schunk}
+\begin{Sinput}
+> gInverse <- MASS::ginv(coefficientMatrix)
+> gInverse
+\end{Sinput}
+\begin{Soutput}
+           [,1]          [,2]         [,3]
+[1,]  0.5000000 -3.333333e-01 1.666667e-01
+[2,] -0.3333333  3.333333e-01 1.942890e-16
+[3,]  0.1666667  6.938894e-17 1.666667e-01
+\end{Soutput}
+\begin{Sinput}
+> round(gInverse %*% coefficientMatrix)
+\end{Sinput}
+\begin{Soutput}
+     [,1] [,2] [,3]
+[1,]    1    0    0
+[2,]    0    1    0
+[3,]    0    0    1
+\end{Soutput}
+\begin{Sinput}
+> round(coefficientMatrix %*% gInverse %*% coefficientMatrix)
+\end{Sinput}
+\begin{Soutput}
+     [,1] [,2] [,3]
+[1,]    1    0    1
+[2,]    0    2    2
+[3,]    1    2    3
+\end{Soutput}
+\end{Schunk}
+\item Using the inverse from part (c), solve for $x$. Prove your solution satisfies the equations
+\begin{Schunk}
+\begin{Sinput}
+> x <- gInverse %*% c(5, 20, 25)
+> round(x)
+\end{Sinput}
+\begin{Soutput}
+     [,1]
+[1,]    0
+[2,]    5
+[3,]    5
+\end{Soutput}
+\begin{Sinput}
+> coefficientMatrix %*% x
+\end{Sinput}
+\begin{Soutput}
+     [,1]
+[1,]    5
+[2,]   20
+[3,]   25
+\end{Soutput}
+\end{Schunk}
+\item What do your solutions estimate?
+\item Based in what you did in part (e): Can you estimate $x_{1}$? Can you estimate $x_{1} - x_{2}$?
+\end{enumerate}
+\item Using the partitioned matrix inverse procedure on page 14 in the notes
+\begin{enumerate}
+\item Find the inverse of: $\left[\begin{array}{ccc}1&0&1\\0&1&1\\1&1&3\end{array}\right]$
+\item Prove that your answer in (a) is an inverse
+\item Solve $\left[\begin{array}{ccc}1&0&1\\0&1&1\\1&1&3\end{array}\right]\left[\begin{array}{c}x_1\\x_2\\x_3\end{array}\right]=\left[\begin{array}{c}1\\2\\3\end{array}\right]$
+\item What is the solution in (c) an estimate of?
+\item Can you estimate $x_{3}$? With what? Can you estimate $6x_{1} + 4x_{2} - 8x_{3}$? With what?
+\end{enumerate}
+\item Assuming the linear model $y_{i} = \mu + \epsilon_{i}$ where $y_{i}$ is and observed first lactation milkfat production, $\mu$ is the population mean milkfat production, and $\epsilon_{i}$ is the deviation of an individual cow's production from the mean. Write this model as \[\underline{y} = 1\mu + \underline{\epsilon}\]
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+Cow & 1$^{st}$ lactation milkfat (lb)\\
+\hline\hline
+1&300\\
+\hline
+2&290\\
+\hline
+3&405\\
+\hline
+4&360\\
+\hline
+5&315\\
+\hline
+\end{tabular}
+\end{center}
+\begin{enumerate}
+\item Calculate:
+\begin{enumerate}
+\item $X'X$
+\begin{Schunk}
+\begin{Sinput}
+> X <- rep(1,length(y))
+> t(X) %*% X
+\end{Sinput}
+\begin{Soutput}
+     [,1]
+[1,]    5
+\end{Soutput}
+\end{Schunk}
+\item $(X'X)^{-1}$
+\begin{Schunk}
+\begin{Sinput}
+> solve(t(X) %*% X)
+\end{Sinput}
+\begin{Soutput}
+     [,1]
+[1,]  0.2
+\end{Soutput}
+\end{Schunk}
+\item $X'\underline{y}$
+\begin{Schunk}
+\begin{Sinput}
+> t(X) %*% y
+\end{Sinput}
+\begin{Soutput}
+     [,1]
+[1,] 1670
+\end{Soutput}
+\end{Schunk}
+\end{enumerate}
+\item Solve $\hat{\mu} = (X'X)^{-1}X'\underline{y}$
+\begin{Schunk}
+\begin{Sinput}
+> muHat <- as.numeric(solve(t(X) %*% X) %*% X %*% y)
+> muHat
+\end{Sinput}
+\begin{Soutput}
+[1] 334
+\end{Soutput}
+\end{Schunk}
+\item Show that $\hat{\mu} = \overline{y}$
+\begin{Schunk}
+\begin{Sinput}
+> meanY <- mean(y)
+> meanY
+\end{Sinput}
+\begin{Soutput}
+[1] 334
+\end{Soutput}
+\begin{Sinput}
+> all.equal(muHat, meanY)
+\end{Sinput}
+\begin{Soutput}
+[1] TRUE
+\end{Soutput}
+\end{Schunk}
+\item Find the predicted deviations $\hat{\underline{\epsilon}} = \underline{y} - \underline{1}\hat{\mu}$
+\begin{Schunk}
+\begin{Sinput}
+> epsilonHat <- (y - muHat)
+> epsilonHat
+\end{Sinput}
+\begin{Soutput}
+[1] -34 -44  71  26 -19
+\end{Soutput}
+\end{Schunk}
+\item Find $\frac{\hat{\underline{\epsilon}}'\hat{\underline{\epsilon}}}{n - rank(X)}$ and show that this is $s^{2}$ the sample variance.
+\begin{Schunk}
+\begin{Sinput}
+> s2Hat <- as.numeric((t(epsilonHat) %*% epsilonHat) / (length(y) - 1))
+> s2Hat
+\end{Sinput}
+\begin{Soutput}
+[1] 2292.5
+\end{Soutput}
+\begin{Sinput}
+> var(y)
+\end{Sinput}
+\begin{Soutput}
+[1] 2292.5
+\end{Soutput}
+\begin{Sinput}
+> all.equal(s2Hat, var(y))
+\end{Sinput}
+\begin{Soutput}
+[1] TRUE
+\end{Soutput}
+\end{Schunk}
+\end{enumerate}
+\end{enumerate}
+\end{document}
