@@ -3,7 +3,9 @@
 \usepackage[english]{babel}
 \usepackage{amsmath}
 \usepackage{enumitem}
+\usepackage{arydshln}
 \usepackage{amsfonts}
+\usepackage{multirow}
 \usepackage{multicol}
 \usepackage{amssymb}
 \usepackage{tikz}
@@ -26,6 +28,15 @@
 \end{Soutput}
 \end{Schunk}
 \item Express any linearly dependent columns in the matrix form $\left[\begin{array}{c}A_{12}\\A_{22}\end{array}\right]=\left[\begin{array}{c}A_{11}\\A'_{12}\end{array}\right]L$
+%\hdashline[2pt/2pt]
+\begin{equation}
+\begin{split}
+A &= \left[\begin{array}{cc;{2pt/2pt}c}1 & 0 &1 \\\hdashline[2pt/2pt] 0 & 2 & 2 \\ 1 & 2 & 3\end{array}\right]\\
+A_{\left[\begin{array}{c}12\\22\end{array}\right]}&= \left[\begin{array}{cc}1&0\\0&1\\2&1\end{array}\right]\left[\begin{array}{c}1\\1\end{array}\right]\\
+A_{\left[\begin{array}{c}12\\22\end{array}\right]}&= \left[\begin{array}{c}(1 \times 1 + 0 \times 1)\end{array}\right]
+\end{split}
+\end{equation}
+%\multirow{2}{*}{}
 \item Find a generalized inverse of the coefficient matrix. Prove that it is a generalized inverse
 \begin{Schunk}
 \begin{Sinput}
