@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  11 SEP 2018 19:58
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  11 SEP 2018 20:21
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -898,11 +898,11 @@ File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
 Here is how much of TeX's memory you used:
  15273 strings out of 492649
  286402 string characters out of 6129622
- 343098 words of memory out of 5000000
+ 344098 words of memory out of 5000000
  18801 multiletter control sequences out of 15000+600000
  31668 words of font info for 72 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,23n,54p,459b,666s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 55i,23n,54p,459b,559s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2018/texmf-dist/fonts/type1/publi
 c/amsfonts/cm/cmex10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public
 /amsfonts/cmextra/cmex8.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/pub
@@ -917,7 +917,7 @@ onts/cm/cmsy10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfo
 nts/cm/cmsy6.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfont
 s/cm/cmsy8.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/
 cm/cmtt12.pfb>
-Output written on HW2_DanielOsorio.pdf (3 pages, 129059 bytes).
+Output written on HW2_DanielOsorio.pdf (3 pages, 128935 bytes).
 PDF statistics:
  70 PDF objects out of 1000 (max. 8388607)
  50 compressed objects within 1 object stream
