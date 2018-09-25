@@ -1,0 +1,172 @@
+\documentclass[12pt,a4paper]{paper}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{arydshln}
+\usepackage{amsfonts}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{vwcol}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage[left=1cm,right=1cm,top=1.5cm,bottom=2cm]{geometry}
+\allowdisplaybreaks
+\usepackage{Sweave}
+\begin{document}
+\title{GENE638 - Homework 3\\\small{Daniel Osorio - dcosorioh@tamu.edu\\Department of Veterinary Integrative Biosciences\\Texas A\&M University}}
+\maketitle
+\input{HW3_DanielOsorio-concordance}
+\begin{enumerate}
+\item Given the Lactation Milfat Yield Data and assuming the model $y_{ijk} = \mu + H_{i} + L_{j}+C_{k} + \epsilon_{ijk}$ where herd (H), lactation (L), and cow (C) effects are fixed effects, and $\underline{y} = X\underline{\beta} + \epsilon$; $E\left[\underline{y}\right] = X\underline{\beta}$; $Var(\underline{y}) = Var(\underline{\epsilon}) = I\sigma^{2}_{\epsilon}$ = V.
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+COW & HERD & LACTATION & MILKFAT (lb) \\
+\hline
+\hline
+1 & 1 & 1 & 600 \\
+\hline
+1 & 1 & 2 & 680 \\
+\hline
+2 & 1 & 1 & 500 \\
+\hline
+3 & 2 & 1 & 800 \\
+\hline
+3 & 2 & 2 & 895 \\
+\hline
+4 & 2 & 1 & 775 \\
+\hline
+5 & 2 & 1 & 600 \\
+\hline
+5 & 2 & 2 & 715 \\
+\hline
+\end{tabular}
+\end{center}
+\begin{enumerate}
+\item What are $\underline{y}$, $X$ and $\beta$ for this design?\\
+\begin{minipage}[c]{0.2\linewidth}
+\[\underline{y} = \left[\begin{array}{c}600 \\ 
+  680 \\ 
+  500 \\ 
+  800 \\ 
+  895 \\ 
+  775 \\ 
+  600 \\ 
+  715 \\ \end{array}\right]\]
+\end{minipage}
+\begin{minipage}[c]{0.5\linewidth}
+\[X = \left[\begin{array}{cccccccc}
+1 & 1 & 1 & 1 & 0 & 0 & 0 & 0 \\ 
+  1 & 1 & 0 & 1 & 0 & 0 & 0 & 0 \\ 
+  1 & 1 & 1 & 0 & 1 & 0 & 0 & 0 \\ 
+  1 & 0 & 1 & 0 & 0 & 1 & 0 & 0 \\ 
+  1 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\ 
+  1 & 0 & 1 & 0 & 0 & 0 & 1 & 0 \\ 
+  1 & 0 & 1 & 0 & 0 & 0 & 0 & 1 \\ 
+  1 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\ 
+\end{array}\right]\]
+\end{minipage}
+\begin{minipage}[c]{0.2\linewidth}
+\[\beta = \left[\begin{array}{c}\mu\\H_{1}\\H_{2}\\L_{1}\\L_{2}\\C_{1}\\C_{2}\\C_{3}\\C_{4}\\C_{5}\end{array}\right]\]
+\end{minipage}
+\item Write the equations $X'X\beta = X'\underline{y}$ in matrix form (after multiplication of both sides by $\sigma^{2}_{\epsilon}$)
+\[\left[\begin{array}{cccccccc}
+8 & 3 & 5 & 2 & 1 & 2 & 1 & 2 \\ 
+  3 & 3 & 2 & 2 & 1 & 0 & 0 & 0 \\ 
+  5 & 2 & 5 & 1 & 1 & 1 & 1 & 1 \\ 
+  2 & 2 & 1 & 2 & 0 & 0 & 0 & 0 \\ 
+  1 & 1 & 1 & 0 & 1 & 0 & 0 & 0 \\ 
+  2 & 0 & 1 & 0 & 0 & 2 & 0 & 0 \\ 
+  1 & 0 & 1 & 0 & 0 & 0 & 1 & 0 \\ 
+  2 & 0 & 1 & 0 & 0 & 0 & 0 & 2 \\ 
+\end{array}\right]
+\left[\begin{array}{c}\mu\\H_{1}\\H_{2}\\L_{1}\\L_{2}\\C_{1}\\C_{2}\\C_{3}\\C_{4}\\C_{5}\end{array}\right] = \left[\begin{array}{cccccccc}
+1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\ 
+  1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 \\ 
+  1 & 0 & 1 & 1 & 0 & 1 & 1 & 0 \\ 
+  1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\ 
+  0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\ 
+  0 & 0 & 0 & 1 & 1 & 0 & 0 & 0 \\ 
+  0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\ 
+  0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 \\ 
+  \end{array}\right]\left[\begin{array}{c}600 \\ 
+  680 \\ 
+  500 \\ 
+  800 \\ 
+  895 \\ 
+  775 \\ 
+  600 \\ 
+  715 \\ \end{array}\right]
+\]
+\item Show that $\hat{\mu} = 705.8$; $\hat{H_{1}} = -109.2$; $\hat{H_{2}} = 0$; $\hat{L_{1}} = -96.7$; $\hat{L_{2}} = 0$; $\hat{C_{1}} = 91.7$; $\hat{C_{2}} = 0$; $\hat{C_{3}} = 190$; $\hat{C_{4}} = 165.8$; $\hat{C_{5}} = 0$, provide a solution for the systems of equation in (b).
+\begin{Schunk}
+\begin{Sinput}
+> yHat <- X %*% c(mu = 705.8, H1 = -109.2, H2 = 0, L1 = -96.7,
++         L2 = 0, C1 = 91.7, C2 = 0, C3 = 190, C4 = 165, C5 = 0)
+> yHat
+\end{Sinput}
+\begin{Soutput}
+      [,1]
+[1,] 591.6
+[2,] 688.3
+[3,] 499.9
+[4,] 799.1
+[5,] 895.8
+[6,] 774.1
+[7,] 609.1
+[8,] 705.8
+\end{Soutput}
+\end{Schunk}
+\item Find $\underline{\hat{\epsilon}} = \underline{y} - X\beta$, which are the fitted errors when fixed effects model assumed.
+\begin{Schunk}
+\begin{Sinput}
+> e <- y - yHat
+> e
+\end{Sinput}
+\begin{Soutput}
+     [,1]
+[1,]  8.4
+[2,] -8.3
+[3,]  0.1
+[4,]  0.9
+[5,] -0.8
+[6,]  0.9
+[7,] -9.1
+[8,]  9.2
+\end{Soutput}
+\end{Schunk}
+\item Find $\underline{\hat{\epsilon}}'\underline{\hat{\epsilon}}$, the error sum of squares.
+\begin{Schunk}
+\begin{Sinput}
+> t(e) %*% e
+\end{Sinput}
+\begin{Soutput}
+       [,1]
+[1,] 309.17
+\end{Soutput}
+\end{Schunk}
+\end{enumerate}
+\item Now, setting cow (C) effects as random effect, the model is: $\underline{y} = X\beta + Zu + \epsilon$, and: \[E\left[\begin{array}{c}\underline{y}\\\underline{u}\\\underline{e}\end{array}\right] = \left[\begin{array}{c}X\underline{\beta}\\0\\0\end{array}\right]; Var\left(\left[\begin{array}{c}\underline{y}\\\underline{u}\\\underline{e}\end{array}\right]\right) = \left[\begin{array}{ccc}ZGZ' + R & ZG & R\\GZ' & G & 0\\R & 0 & R\end{array}\right]\] The difference here is that cows are not longer in $\underline{\beta}$. Generalized least-squares estimate of $\underline{\beta}$ and predictor $\underline{u}$ satisfy: \[\left[\begin{array}{cc} X'R^{-1}X & X'R^{-1}Z\\Z'R^{-1}X & Z'R^{-1}Z + G^{-1}\end{array}\right]\left[\begin{array}{c}\underline{\hat{\beta}}\\\underline{\hat{u}}\end{array}\right] = \left[\begin{array}{c}X'R^{-1}\underline{y}\\Z'R^{-1}\underline{y}\end{array}\right]\]
+and if $G = I\sigma^{2}_{g}$, $R = I\sigma_{\epsilon}^{2}$, and $\lambda = \frac{\sigma^{2}_{\epsilon}}{\sigma^{2}_{g}}$, these may be written as: 
+\[\left[\begin{array}{cc} X'X & X'Z\\Z'X & Z'Z + I\lambda\end{array}\right]\left[\begin{array}{c}\underline{\hat{\beta}}\\\underline{\hat{u}}\end{array}\right] = \left[\begin{array}{c}X'\underline{y}\\Z'\underline{y}\end{array}\right]\]
+\begin{enumerate}
+\item What are X, Z, $\underline{\beta}$ and $\underline{u}$ for this design?
+\item If $\lambda = 0$, write these equations ans show that they are identical to the equations in 1(b) where cows were modeled as a fixed effect.
+\end{enumerate}
+\item And now $X$ in 1(a) can be partitioned as $\left[X : Z\right]$ for $X$ and $Z$ as defined in 2(a), so now:
+\begin{align*}
+\underline{y} &= X\underline{\beta} + Z\underline{u} + \epsilon\\
+&= \left[X:Z\right]\left[\begin{array}{c}\underline{\hat{\beta}}\\\underline{\hat{u}}\end{array}\right] + \epsilon \\
+&= W\underline{\theta} + \epsilon
+\end{align*}
+Which is of the same form as $\underline{y} = X\underline{\beta} + \underline{\epsilon}$. See therefore that separating fixed and random effects in the model as $\underline{y} = X\underline{\beta} + Z\underline{u} + \underline{\epsilon}$ is only convention. Elements of $\underline{u}$ are not treated as random effects for purpose of prediction until $G^{-1}$ is included in the MME model. 
+\begin{enumerate}
+\item Assume $\lambda = \frac{\sigma^{2}_{\epsilon}}{\sigma^{2}_{g}} = 1.5$. Now write the completed equations from above
+\item Show that $\hat{\mu} = 819.4$; $\hat{H_{1}} = -168.6$; $\hat{H_{2}} = 0$; $\hat{L_{1}} = -96.9$; $\hat{L_{2}} = 0$; $\hat{C_{1}} = 21.5$; $\hat{C_{2}} = -21.5$; $\hat{C_{3}} = 43.8$; $\hat{C_{5}} = -64.8$ provide a solution to the systems of equations.
+\item[*] Note here that $\hat{\mu}$ estimates $\mu + H_{2} + L_{2}$; $\hat{H}_{1}$ estimates $H_{1} - H_{2}$; $\hat{H}_{2}$ estimates $0$; $\hat{L}_{1}$ estimates $L_{1} - L_{2}$; $\hat{L}_{2}$ estimates $0$; $\hat{C}_{k}$ predicts $C_{k}$
+\item Find $\underline{\hat{\epsilon}} - \underline{y} - X\underline{\hat{\beta}} - Z\underline{\hat{u}}$, which are the fitted errors when mixed model assumed. What do the residuals here and in 1(d) predict?
+\item Find $\underline{\hat{\epsilon}}'\underline{\hat{\epsilon}}$ and compare results to those in 1(e). What appears to be a consequence of modeling animals as fixed effects?
+\end{enumerate}
+\end{enumerate}
+\end{document}
