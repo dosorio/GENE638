@@ -125,8 +125,8 @@ COW & HERD & LACTATION & MILKFAT (lb) \\
 \item Find $\underline{\hat{\epsilon}} = \underline{y} - X\beta$, which are the fitted errors when fixed effects model assumed.
 \begin{Schunk}
 \begin{Sinput}
-> e <- y - yHat
-> e
+> eHat <- y - yHat
+> eHat
 \end{Sinput}
 \begin{Soutput}
      [,1]
@@ -143,7 +143,7 @@ COW & HERD & LACTATION & MILKFAT (lb) \\
 \item Find $\underline{\hat{\epsilon}}'\underline{\hat{\epsilon}}$, the error sum of squares.
 \begin{Schunk}
 \begin{Sinput}
-> t(e) %*% e
+> t(eHat) %*% eHat
 \end{Sinput}
 \begin{Soutput}
        [,1]
@@ -281,11 +281,11 @@ Which is of the same form as $\underline{y} = X\underline{\beta} + \underline{\e
 \end{Soutput}
 \end{Schunk}
 \item[*] Note here that $\hat{\mu}$ estimates $\mu + H_{2} + L_{2}$; $\hat{H}_{1}$ estimates $H_{1} - H_{2}$; $\hat{H}_{2}$ estimates $0$; $\hat{L}_{1}$ estimates $L_{1} - L_{2}$; $\hat{L}_{2}$ estimates $0$; $\hat{C}_{k}$ predicts $C_{k}$
-\item Find $\underline{\hat{\epsilon}} - \underline{y} - X\underline{\hat{\beta}} - Z\underline{\hat{u}}$, which are the fitted errors when mixed model assumed. What do the residuals here and in 1(d) predict?
+\item Find $\underline{\hat{\epsilon}} = \underline{y} - X\underline{\hat{\beta}} - Z\underline{\hat{u}}$, which are the fitted errors when mixed model assumed. What do the residuals here and in 1(d) predict?
 \begin{Schunk}
 \begin{Sinput}
-> e <- y - yHat
-> e
+> eHat <- y - yHat
+> eHat
 \end{Sinput}
 \begin{Soutput}
       [,1]
@@ -302,7 +302,7 @@ Which is of the same form as $\underline{y} = X\underline{\beta} + \underline{\e
 \item Find $\underline{\hat{\epsilon}}'\underline{\hat{\epsilon}}$ and compare results to those in 1(e). What appears to be a consequence of modeling animals as fixed effects?
 \begin{Schunk}
 \begin{Sinput}
-> t(e) %*% e
+> t(eHat) %*% eHat
 \end{Sinput}
 \begin{Soutput}
          [,1]

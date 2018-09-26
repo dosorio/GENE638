@@ -125,12 +125,12 @@ yHat
 @
 \item Find $\underline{\hat{\epsilon}} = \underline{y} - X\beta$, which are the fitted errors when fixed effects model assumed.
 <<>>=
-e <- y - yHat
-e
+eHat <- y - yHat
+eHat
 @
 \item Find $\underline{\hat{\epsilon}}'\underline{\hat{\epsilon}}$, the error sum of squares.
 <<>>=
-t(e) %*% e
+t(eHat) %*% eHat
 @
 \end{enumerate}
 \item Now, setting cow (C) effects as random effect, the model is: $\underline{y} = X\beta + Zu + \epsilon$, and: \[E\left[\begin{array}{c}\underline{y}\\\underline{u}\\\underline{e}\end{array}\right] = \left[\begin{array}{c}X\underline{\beta}\\0\\0\end{array}\right]; Var\left(\left[\begin{array}{c}\underline{y}\\\underline{u}\\\underline{e}\end{array}\right]\right) = \left[\begin{array}{ccc}ZGZ' + R & ZG & R\\GZ' & G & 0\\R & 0 & R\end{array}\right]\] The difference here is that cows are not longer in $\underline{\beta}$. Generalized least-squares estimate of $\underline{\beta}$ and predictor $\underline{u}$ satisfy: \[\left[\begin{array}{cc} X'R^{-1}X & X'R^{-1}Z\\Z'R^{-1}X & Z'R^{-1}Z + G^{-1}\end{array}\right]\left[\begin{array}{c}\underline{\hat{\beta}}\\\underline{\hat{u}}\end{array}\right] = \left[\begin{array}{c}X'R^{-1}\underline{y}\\Z'R^{-1}\underline{y}\end{array}\right]\]
@@ -140,6 +140,7 @@ and if $G = I\sigma^{2}_{g}$, $R = I\sigma_{\epsilon}^{2}$, and $\lambda = \frac
 <<echo=FALSE>>=
 X <- cbind(mu,H1,H2,L1,L2)
 Z <- cbind(C1,C2,C3,C4,C5)
+Y <- as.data.frame.array(cbind(H1,H2,L1,L2,s =as.factor(c(1,1,2,3,3,4,5,5))))
 @
 \item What are X, Z, $\underline{\beta}$ and $\underline{u}$ for this design?\\
 \begin{minipage}[c]{0.3\linewidth}
@@ -254,14 +255,14 @@ yHat <- X %*% betaHat + Z %*% uHat
 yHat
 @
 \item[*] Note here that $\hat{\mu}$ estimates $\mu + H_{2} + L_{2}$; $\hat{H}_{1}$ estimates $H_{1} - H_{2}$; $\hat{H}_{2}$ estimates $0$; $\hat{L}_{1}$ estimates $L_{1} - L_{2}$; $\hat{L}_{2}$ estimates $0$; $\hat{C}_{k}$ predicts $C_{k}$
-\item Find $\underline{\hat{\epsilon}} - \underline{y} - X\underline{\hat{\beta}} - Z\underline{\hat{u}}$, which are the fitted errors when mixed model assumed. What do the residuals here and in 1(d) predict?
+\item Find $\underline{\hat{\epsilon}} = \underline{y} - X\underline{\hat{\beta}} - Z\underline{\hat{u}}$, which are the fitted errors when mixed model assumed. What do the residuals here and in 1(d) predict?
 <<>>=
-e <- y - yHat
-e
+eHat <- y - yHat
+eHat
 @
 \item Find $\underline{\hat{\epsilon}}'\underline{\hat{\epsilon}}$ and compare results to those in 1(e). What appears to be a consequence of modeling animals as fixed effects?
 <<>>=
-t(e) %*% e
+t(eHat) %*% eHat
 @
 \end{enumerate}
 \end{enumerate}
