@@ -123,7 +123,7 @@ betaHat <- c(mu = 705.8, H1 = -109.2, H2 = 0, L1 = -96.7,
 yHat <- X %*% betaHat
 yHat
 @
-\item Find $\underline{\hat{\epsilon}} = \underline{y} - X\beta$, which are the fitted errors when fixed effects model assumed.
+\item Find $\underline{\hat{\epsilon}} = \underline{y} - X\beta$, which are the fitted errors when fixed effects model assumed. \textit{The deviation with respect to the mean of the phenotypes after subtracting all the effects associated with the fixed effects.}
 <<>>=
 eHat <- y - yHat
 eHat
@@ -255,12 +255,16 @@ yHat <- X %*% betaHat + Z %*% uHat
 yHat
 @
 \item[*] Note here that $\hat{\mu}$ estimates $\mu + H_{2} + L_{2}$; $\hat{H}_{1}$ estimates $H_{1} - H_{2}$; $\hat{H}_{2}$ estimates $0$; $\hat{L}_{1}$ estimates $L_{1} - L_{2}$; $\hat{L}_{2}$ estimates $0$; $\hat{C}_{k}$ predicts $C_{k}$
-\item Find $\underline{\hat{\epsilon}} = \underline{y} - X\underline{\hat{\beta}} - Z\underline{\hat{u}}$, which are the fitted errors when mixed model assumed. What do the residuals here and in 1(d) predict?
+\item Find $\underline{\hat{\epsilon}} = \underline{y} - X\underline{\hat{\beta}} - Z\underline{\hat{u}}$.
+\begin{enumerate}
+\item Which are the fitted errors when mixed model assumed? 
 <<>>=
 eHat <- y - yHat
 eHat
 @
-\item Find $\underline{\hat{\epsilon}}'\underline{\hat{\epsilon}}$ and compare results to those in 1(e). What appears to be a consequence of modeling animals as fixed effects?
+\item What do the residuals here and in 1(d) predict? \textit{The deviation with respect to the mean of the phenotypes after subtracting all the effects associated with the fixed effects (1(d)) and also the random effects (3(c)).}
+\end{enumerate}
+\item Find $\underline{\hat{\epsilon}}'\underline{\hat{\epsilon}}$ and compare results to those in 1(e). What appears to be a consequence of modeling animals as fixed effects? \textit{An increase of the measurable variability of the individuals in the model}.
 <<>>=
 t(eHat) %*% eHat
 @

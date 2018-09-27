@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.9.24)  26 SEP 2018 18:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.9.24)  27 SEP 2018 15:36
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -982,13 +982,13 @@ Overfull \hbox (5.26614pt too wide) detected at line 261
 
 [3] [4] (./HW3_DanielOsorio.aux) ) 
 Here is how much of TeX's memory you used:
- 15561 strings out of 494091
- 293107 string characters out of 6163523
+ 15565 strings out of 494091
+ 293147 string characters out of 6163523
  374917 words of memory out of 5000000
- 18855 multiletter control sequences out of 15000+600000
- 32300 words of font info for 75 fonts, out of 8000000 for 9000
+ 18856 multiletter control sequences out of 15000+600000
+ 34777 words of font info for 78 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
- 55i,17n,54p,932b,571s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 55i,17n,54p,932b,575s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2018basic/texmf-dist/font
 s/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2018basic/texmf-dist/
 fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2018basic/texmf-d
@@ -1003,12 +1003,13 @@ ve/2018basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmsltt10.pfb></usr/local
 /texlive/2018basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr
 /local/texlive/2018basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><
 /usr/local/texlive/2018basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pf
-b></usr/local/texlive/2018basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt1
-2.pfb>
-Output written on HW3_DanielOsorio.pdf (4 pages, 147932 bytes).
+b></usr/local/texlive/2018basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmti1
+2.pfb></usr/local/texlive/2018basic/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mtt12.pfb>
+Output written on HW3_DanielOsorio.pdf (4 pages, 161955 bytes).
 PDF statistics:
- 77 PDF objects out of 1000 (max. 8388607)
- 55 compressed objects within 1 object stream
+ 81 PDF objects out of 1000 (max. 8388607)
+ 58 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  17 words of extra memory for PDF output out of 10000 (max. 10000000)
 
