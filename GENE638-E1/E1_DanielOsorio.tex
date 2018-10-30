@@ -1,0 +1,276 @@
+\documentclass[12pt,a4paper]{paper}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{arydshln}
+\usepackage{amsfonts}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{vwcol}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage[left=1cm,right=1cm,top=1.5cm,bottom=2cm]{geometry}
+\allowdisplaybreaks
+\usepackage{Sweave}
+\begin{document}
+\title{GENE638 - Exam 1\\\small{Daniel Osorio - dcosorioh@tamu.edu\\Department of Veterinary Integrative Biosciences\\Texas A\&M University}}
+\maketitle
+\input{E1_DanielOsorio-concordance}
+Nelore-Angus F2 pedigree and data:
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+ID&SIRE&DAM&GENDER&HERD&NEW BORN CANNON BONE LEGHT (mm)\\
+\hline
+\hline
+A&0&0&M&1&302\\
+\hline
+B&0&0&M&2&275\\
+\hline
+C&A&0&F&1&279\\
+\hline
+D&A&0&F&3&250\\
+\hline
+E&B&C&F&2&285\\
+\hline
+F&B&D&M&3&278\\
+\hline
+\end{tabular}
+\end{center}
+\begin{enumerate}
+\item Using the Henderson's methodology for directly building $A^{-1}$ and the above pedigree information.
+\begin{enumerate}
+\item Calculate $A^{-1}$
+\[A^{-1} = \left[
+\begin{array}{rrrrrr}
+1.67 & 0.00 & -0.67 & -0.67 & 0.00 & 0.00 \\ 
+  0.00 & 2.00 & 0.50 & 0.50 & -1.00 & -1.00 \\ 
+  -0.67 & 0.50 & 1.83 & 0.00 & -1.00 & 0.00 \\ 
+  -0.67 & 0.50 & 0.00 & 1.83 & 0.00 & -1.00 \\ 
+  0.00 & -1.00 & -1.00 & 0.00 & 2.00 & 0.00 \\ 
+  0.00 & -1.00 & 0.00 & -1.00 & 0.00 & 2.00 \\ 
+\end{array}
+\right]\]
+\item Prove that it is the inverse of the NMR
+\begin{scriptsize}
+\[
+\left[
+\begin{array}{rrrrrr}
+1.67 & 0.00 & -0.67 & -0.67 & 0.00 & 0.00 \\ 
+  0.00 & 2.00 & 0.50 & 0.50 & -1.00 & -1.00 \\ 
+  -0.67 & 0.50 & 1.83 & 0.00 & -1.00 & 0.00 \\ 
+  -0.67 & 0.50 & 0.00 & 1.83 & 0.00 & -1.00 \\ 
+  0.00 & -1.00 & -1.00 & 0.00 & 2.00 & 0.00 \\ 
+  0.00 & -1.00 & 0.00 & -1.00 & 0.00 & 2.00 \\ 
+\end{array}
+\right] \times \left[
+\begin{array}{rrrrrr}
+1.00 & 0.00 & 0.50 & 0.50 & 0.25 & 0.25 \\ 
+  0.00 & 1.00 & 0.00 & 0.00 & 0.50 & 0.50 \\ 
+  0.50 & 0.00 & 1.00 & 0.25 & 0.50 & 0.12 \\ 
+  0.50 & 0.00 & 0.25 & 1.00 & 0.12 & 0.50 \\ 
+  0.25 & 0.50 & 0.50 & 0.12 & 1.00 & 0.31 \\ 
+  0.25 & 0.50 & 0.12 & 0.50 & 0.31 & 1.00 \\ 
+\end{array}
+\right]= \left[\begin{array}{rrrrrr}
+1 & 0 & 0 & 0 & 0 & 0 \\ 
+  0 & 1 & 0 & 0 & 0 & 0 \\ 
+  0 & 0 & 1 & 0 & 0 & 0 \\ 
+  0 & 0 & 0 & 1 & 0 & 0 \\ 
+  0 & 0 & 0 & 0 & 1 & 0 \\ 
+  0 & 0 & 0 & 0 & 0 & 1 \\ 
+\end{array}\right] \]
+\[\left[
+\begin{array}{rrrrrr}
+1.00 & 0.00 & 0.50 & 0.50 & 0.25 & 0.25 \\ 
+  0.00 & 1.00 & 0.00 & 0.00 & 0.50 & 0.50 \\ 
+  0.50 & 0.00 & 1.00 & 0.25 & 0.50 & 0.12 \\ 
+  0.50 & 0.00 & 0.25 & 1.00 & 0.12 & 0.50 \\ 
+  0.25 & 0.50 & 0.50 & 0.12 & 1.00 & 0.31 \\ 
+  0.25 & 0.50 & 0.12 & 0.50 & 0.31 & 1.00 \\ 
+\end{array}
+\right] \times \left[
+\begin{array}{rrrrrr}
+1.67 & 0.00 & -0.67 & -0.67 & 0.00 & 0.00 \\ 
+  0.00 & 2.00 & 0.50 & 0.50 & -1.00 & -1.00 \\ 
+  -0.67 & 0.50 & 1.83 & 0.00 & -1.00 & 0.00 \\ 
+  -0.67 & 0.50 & 0.00 & 1.83 & 0.00 & -1.00 \\ 
+  0.00 & -1.00 & -1.00 & 0.00 & 2.00 & 0.00 \\ 
+  0.00 & -1.00 & 0.00 & -1.00 & 0.00 & 2.00 \\ 
+\end{array}
+\right] = \left[\begin{array}{rrrrrr}
+1 & 0 & 0 & 0 & 0 & 0 \\ 
+  0 & 1 & 0 & 0 & 0 & 0 \\ 
+  0 & 0 & 1 & 0 & 0 & 0 \\ 
+  0 & 0 & 0 & 1 & 0 & 0 \\ 
+  0 & 0 & 0 & 0 & 1 & 0 \\ 
+  0 & 0 & 0 & 0 & 0 & 1 \\ 
+\end{array}\right]\]
+\end{scriptsize}
+\end{enumerate}
+\item The model for analyses of cannon bone length recorded at birth in calves: $\underline{y} = X\underline{\beta} + Z\underline{u} + \underline{e}$ with $h^{2} = \frac{\sigma^{2}_{a}}{\sigma^{2}_{p}}$ and $\lambda = \frac{\sigma^{2}_{e}}{\sigma^{2}_{a}} = 1.75$. Using that information: 
+\begin{enumerate}
+\item Set up the Mixed Model Equations (MME)
+\[\left[\begin{array}{c}302\\275\\279\\250\\285\\278\\\end{array}\right] = \left[\begin{tabular}{rrrrrr}
+1 & 1 & 0 & 1 & 0 & 0 \\ 
+  1 & 1 & 0 & 0 & 1 & 0 \\ 
+  1 & 0 & 1 & 1 & 0 & 0 \\ 
+  1 & 0 & 1 & 0 & 0 & 1 \\ 
+  1 & 0 & 1 & 0 & 1 & 0 \\ 
+  1 & 1 & 0 & 0 & 0 & 1 \\ 
+\end{tabular}\right] \times \left[\begin{array}{c}\mu\\G_{M}\\G_{F}\\H_{1}\\H_{2}\\H_{3} \end{array}\right] + \left[\begin{tabular}{rrrrrr}
+1 & 0 & 0 & 0 & 0 & 0 \\ 
+  0 & 1 & 0 & 0 & 0 & 0 \\ 
+  0 & 0 & 1 & 0 & 0 & 0 \\ 
+  0 & 0 & 0 & 1 & 0 & 0 \\ 
+  0 & 0 & 0 & 0 & 1 & 0 \\ 
+  0 & 0 & 0 & 0 & 0 & 1 \\ 
+\end{tabular}\right] \times \left[\begin{array}{c}u_{A}\\u_{B}\\u_{C}\\u_{D}\\u_{E}\\u_{F}\\\end{array}\right] + \left[\begin{array}{c}e_{A}\\e_{B}\\e_{C}\\e_{D}\\e_{E}\\e_{F}\\\end{array}\right]\]
+\begin{scriptsize}
+\[\left[\begin{tabular}{rrrrrrrrrrrr}
+6.00 & 3.00 & 3.00 & 2.00 & 2.00 & 2.00 & 1.00 & 1.00 & 1.00 & 1.00 & 1.00 & 1.00 \\ 
+  3.00 & 3.00 & 0.00 & 1.00 & 1.00 & 1.00 & 1.00 & 1.00 & 0.00 & 0.00 & 0.00 & 1.00 \\ 
+  3.00 & 0.00 & 3.00 & 1.00 & 1.00 & 1.00 & 0.00 & 0.00 & 1.00 & 1.00 & 1.00 & 0.00 \\ 
+  2.00 & 1.00 & 1.00 & 2.00 & 0.00 & 0.00 & 1.00 & 0.00 & 1.00 & 0.00 & 0.00 & 0.00 \\ 
+  2.00 & 1.00 & 1.00 & 0.00 & 2.00 & 0.00 & 0.00 & 1.00 & 0.00 & 0.00 & 1.00 & 0.00 \\ 
+  2.00 & 1.00 & 1.00 & 0.00 & 0.00 & 2.00 & 0.00 & 0.00 & 0.00 & 1.00 & 0.00 & 1.00 \\ 
+  1.00 & 1.00 & 0.00 & 1.00 & 0.00 & 0.00 & 3.92 & 0.00 & -1.17 & -1.17 & 0.00 & 0.00 \\ 
+  1.00 & 1.00 & 0.00 & 0.00 & 1.00 & 0.00 & 0.00 & 4.50 & 0.88 & 0.88 & -1.75 & -1.75 \\ 
+  1.00 & 0.00 & 1.00 & 1.00 & 0.00 & 0.00 & -1.17 & 0.88 & 4.21 & 0.00 & -1.75 & 0.00 \\ 
+  1.00 & 0.00 & 1.00 & 0.00 & 0.00 & 1.00 & -1.17 & 0.88 & 0.00 & 4.21 & 0.00 & -1.75 \\ 
+  1.00 & 0.00 & 1.00 & 0.00 & 1.00 & 0.00 & 0.00 & -1.75 & -1.75 & 0.00 & 4.50 & 0.00 \\ 
+  1.00 & 1.00 & 0.00 & 0.00 & 0.00 & 1.00 & 0.00 & -1.75 & 0.00 & -1.75 & 0.00 & 4.50 \\ 
+\end{tabular}\right]\times\left[\begin{tabular}{l}$\mu$\\$G_{M}$\\$G_{F}$\\$H_{1}$\\$H_{2}$\\$H_{3}$\\$u_{A}$\\$u_{B}$\\$u_{C}$\\$u_{D}$\\$u_{E}$\\$u_{F}$\\\end{tabular}\right] = \left[\begin{tabular}{r}
+1669 \\ 
+  855 \\ 
+  814 \\ 
+  581 \\ 
+  560 \\ 
+  528 \\ 
+  302 \\ 
+  275 \\ 
+  279 \\ 
+  250 \\ 
+  285 \\ 
+  278 \\ 
+\end{tabular}\right]\]
+\end{scriptsize}
+\end{enumerate}
+\item What is the narrow sense heritability $(h^{2})$ that corresponds to this value of $\lambda$?
+\begin{equation*}
+\begin{split}
+\lambda &= \frac{1-h^{2}}{h^{2}}\\
+1.75 &= \frac{1-h^{2}}{h^{2}}\\
+1.75h^{2} &= 1 - h^{2}\\
+1.75h^{2} + h^{2} &= 1\\
+2.75h^{2} &= 1\\
+h^{2} &= \frac{1}{2.75}\\
+h^{2} &= 0.36
+\end{split}
+\end{equation*}
+\item Why does the rank of the coefficient matrix not equal the order of the matrix? \textit{Because the rank of a matrix is defined as (a) the maximum number of linearly independent column vectors in the matrix or (b) the maximum number of linearly independent row vectors in the matrix. In this case, $G_{F}$ and $H_{3}$ are not independent rows/columns reducing the rank from 12 to 10.}
+\item Find a generalized inverse of the coefficient matrix. Probe that it is a generalized inverse.
+\[C^{-} = \left[
+\begin{tabular}{rrrrrrrrrrrr}
+1.11 & -0.41 & 0.00 & -0.70 & -0.79 & 0.00 & -0.20 & -0.06 & -0.22 & -0.46 & -0.18 & -0.35 \\ 
+  -0.41 & 0.91 & 0.00 & -0.15 & -0.00 & 0.00 & -0.01 & -0.19 & 0.21 & 0.07 & 0.10 & -0.16 \\ 
+  0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
+  -0.70 & -0.15 & 0.00 & 1.53 & 0.74 & 0.00 & -0.21 & 0.14 & -0.32 & 0.21 & -0.08 & 0.32 \\ 
+  -0.79 & -0.00 & 0.00 & 0.74 & 1.56 & 0.00 & 0.11 & -0.27 & -0.02 & 0.36 & -0.28 & 0.21 \\ 
+  0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
+  -0.20 & -0.01 & 0.00 & -0.21 & 0.11 & 0.00 & 0.52 & 0.03 & 0.30 & 0.25 & 0.15 & 0.16 \\ 
+  -0.06 & -0.19 & 0.00 & 0.14 & -0.27 & 0.00 & 0.03 & 0.55 & -0.01 & 0.02 & 0.28 & 0.28 \\ 
+  -0.22 & 0.21 & 0.00 & -0.32 & -0.02 & 0.00 & 0.30 & -0.01 & 0.56 & 0.16 & 0.27 & 0.06 \\ 
+  -0.46 & 0.07 & 0.00 & 0.21 & 0.36 & 0.00 & 0.25 & 0.02 & 0.16 & 0.54 & 0.09 & 0.30 \\ 
+  -0.18 & 0.10 & 0.00 & -0.08 & -0.28 & 0.00 & 0.15 & 0.28 & 0.27 & 0.09 & 0.54 & 0.16 \\ 
+  -0.35 & -0.16 & 0.00 & 0.32 & 0.21 & 0.00 & 0.16 & 0.28 & 0.06 & 0.30 & 0.16 & 0.56 \\ 
+\end{tabular}
+\right]
+\]
+\begin{Schunk}
+\begin{Sinput}
+> round(Cminus %*% C)
+\end{Sinput}
+\begin{Soutput}
+   mu Gm Gf H1 H2 H3 A B C D E F
+mu  1  0  1  0  0  1 0 0 0 0 0 0
+Gm  0  1 -1  0  0  0 0 0 0 0 0 0
+Gf  0  0  0  0  0  0 0 0 0 0 0 0
+H1  0  0  0  1  0 -1 0 0 0 0 0 0
+H2  0  0  0  0  1 -1 0 0 0 0 0 0
+H3  0  0  0  0  0  0 0 0 0 0 0 0
+A   0  0  0  0  0  0 1 0 0 0 0 0
+B   0  0  0  0  0  0 0 1 0 0 0 0
+C   0  0  0  0  0  0 0 0 1 0 0 0
+D   0  0  0  0  0  0 0 0 0 1 0 0
+E   0  0  0  0  0  0 0 0 0 0 1 0
+F   0  0  0  0  0  0 0 0 0 0 0 1
+\end{Soutput}
+\begin{Sinput}
+> round(C %*% Cminus %*% C,2)
+\end{Sinput}
+\begin{Soutput}
+   mu Gm Gf H1 H2 H3     A     B     C     D     E     F
+mu  6  3  3  2  2  2  1.00  1.00  1.00  1.00  1.00  1.00
+Gm  3  3  0  1  1  1  1.00  1.00  0.00  0.00  0.00  1.00
+Gf  3  0  3  1  1  1  0.00  0.00  1.00  1.00  1.00  0.00
+H1  2  1  1  2  0  0  1.00  0.00  1.00  0.00  0.00  0.00
+H2  2  1  1  0  2  0  0.00  1.00  0.00  0.00  1.00  0.00
+H3  2  1  1  0  0  2  0.00  0.00  0.00  1.00  0.00  1.00
+A   1  1  0  1  0  0  3.92  0.00 -1.17 -1.17  0.00  0.00
+B   1  1  0  0  1  0  0.00  4.50  0.87  0.87 -1.75 -1.75
+C   1  0  1  1  0  0 -1.17  0.87  4.21  0.00 -1.75  0.00
+D   1  0  1  0  0  1 -1.17  0.87  0.00  4.21  0.00 -1.75
+E   1  0  1  0  1  0  0.00 -1.75 -1.75  0.00  4.50  0.00
+F   1  1  0  0  0  1  0.00 -1.75  0.00 -1.75  0.00  4.50
+\end{Soutput}
+\end{Schunk}
+\item Show that these provide a solution of the MME you developed in question 3: $\hat{\mu} = 256.8636$, $\hat{G}_{M} = 14.03433$, $\hat{G}_{F} = 0$, $\hat{H}_{1} = 25.89654$, $\hat{H}_{2} = 15.68469$, $\hat{H}_{3}=0$, $\hat{u}_{A}=0.821931$, $\hat{u}_{B}=-0.54795$, $\hat{u}_{C}=0.623531$, $\hat{u}_{D}=-0.21257$, $\hat{u}_{E}=1.417117$, $\hat{u}_{F}=0.451115$
+\begin{Schunk}
+\begin{Sinput}
+> betaHat <- c(256.8636, 14.03433, 0, 25.89654, 15.68469, 0)
+> uHat <- c(0.821931, -0.54795, 0.623531, -0.21257, 1.417117, 0.451115)
+> print(yHat <- X %*% betaHat + Z %*% uHat)
+\end{Sinput}
+\begin{Soutput}
+         [,1]
+[1,] 297.6164
+[2,] 286.0347
+[3,] 283.3837
+[4,] 256.6510
+[5,] 273.9654
+[6,] 271.3490
+\end{Soutput}
+\end{Schunk}
+\item What does these solutions estimate? \textit{A set of numerical values in function of $G_{F}$ and $H_{3}$ that satisfies the system of equations.}
+\begin{Schunk}
+\begin{Sinput}
+> sE <- round(Cminus %*% C)
+> sE <- paste(colnames(sE),apply(sE,1,function(x){
++   paste(x[x!=0],colnames(sE)[x!=0],sep = "", collapse = "+")
++   }), sep = "=")
+> sE <- gsub("\\+\\-","\\-",gsub("1","",gsub("=$","=0",sE)))
+> writeLines(sE)
+\end{Sinput}
+\begin{Soutput}
+mu=mu+Gf+H3
+Gm=Gm-Gf
+Gf=0
+H=H-H3
+H2=H2-H3
+H3=0
+A=A
+B=B
+C=C
+D=D
+E=E
+F=F
+\end{Soutput}
+\end{Schunk}
+\item Describe the difference between fixed and random effects \textit{Fixed effects are constant across individuals, for that reason, these effects are computed as average for the given sample sharing a given factor. Meanwhile, random effects vary from one to another individual, for that reason, a unique value is calculated for each independently.}
+\item In this model: $y_{ijk}=\mu + H_{i} + L_{j} + C_{k} + e_{ijk}$ in which $y_{ijk}$ is 305-d milk yield of cows, $\mu$ is the overal mean, $H_{i}$ is the fixed effect in the $i^{th}$ herd, $L_{j}$ is the fixed effect of the $j^{th}$ lactation, $C_{k}$ is the effect of the $k^{th}$ cow, and $e_{ijk}$ is the residual associated with the $ijk^{th}$ observation.
+\[P = A + NA + PE + TE\]
+Detail any differences in $\sigma^{2}_{c}$ when cows are modeled as fixed effects vs when (in separate analyses) they are modeled as random effects. Where would you expect the additive component of phenotype to be under each of those parameterizations? \textit{When cows are modeled as fixed effects, the computed values for each cow are the deviation of that specific cow with respect to another one used as a point of comparison (usually the last one); under this parameterization, the $\sigma^{2}_{c}$ are underestimated and the portion of the variance not explained will be assigned to the $\sigma^{2}_{e}$. When cows are modeled as random effects, the computed values for each cow are the deviation of that specific cow with respect to the mean value of all the cows, under this parameterization, the $\sigma^{2}_{c}$ are optimized to be the maximum and then the $\sigma^{2}_{e}$ will be minimized.}
+\end{enumerate}
+\end{document}

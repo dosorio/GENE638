@@ -1,0 +1,284 @@
+\documentclass[12pt,a4paper]{paper}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{arydshln}
+\usepackage{amsfonts}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{vwcol}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage[left=1cm,right=1cm,top=1.5cm,bottom=2cm]{geometry}
+\allowdisplaybreaks
+\begin{document}
+\title{GENE638 - Exam 1\\\small{Daniel Osorio - dcosorioh@tamu.edu\\Department of Veterinary Integrative Biosciences\\Texas A\&M University}}
+\maketitle
+\SweaveOpts{concordance=TRUE}
+Nelore-Angus F2 pedigree and data:
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+ID&SIRE&DAM&GENDER&HERD&NEW BORN CANNON BONE LEGHT (mm)\\
+\hline
+\hline
+A&0&0&M&1&302\\
+\hline
+B&0&0&M&2&275\\
+\hline
+C&A&0&F&1&279\\
+\hline
+D&A&0&F&3&250\\
+\hline
+E&B&C&F&2&285\\
+\hline
+F&B&D&M&3&278\\
+\hline
+\end{tabular}
+\end{center}
+\begin{enumerate}
+\item Using the Henderson's methodology for directly building $A^{-1}$ and the above pedigree information.
+\begin{enumerate}
+\item Calculate $A^{-1}$
+<<echo=FALSE>>=
+Ainv <- matrix(0, nrow = 6,ncol = 6, byrow = TRUE)
+colnames(Ainv) <- rownames(Ainv) <- LETTERS[1:6]
+Ainv["A","A"] <- Ainv["A","A"] + 1
+Ainv["B","B"] <- Ainv["B","B"] + 1
+
+Ainv["C","C"] <- Ainv["C","C"] + 4/3
+Ainv["C","A"] <- Ainv["C","A"] - 2/3
+Ainv["A","C"] <- Ainv["A","C"] - 2/3
+Ainv["A","A"] <- Ainv["A","A"] + 1/3
+
+Ainv["D","D"] <- Ainv["D","D"] + 4/3
+Ainv["D","A"] <- Ainv["D","A"] - 2/3
+Ainv["A","D"] <- Ainv["A","D"] - 2/3
+Ainv["A","A"] <- Ainv["A","A"] + 1/3
+
+Ainv["E","E"] <- Ainv["E","E"] + 2
+Ainv["E","B"] <- Ainv["E","B"] - 1
+Ainv["E","C"] <- Ainv["E","C"] - 1
+Ainv["B","E"] <- Ainv["B","E"] - 1
+Ainv["C","E"] <- Ainv["C","E"] - 1
+Ainv["B","B"] <- Ainv["B","B"] + 1/2
+Ainv["C","C"] <- Ainv["C","C"] + 1/2
+Ainv["C","B"] <- Ainv["C","B"] + 1/2
+Ainv["B","C"] <- Ainv["B","C"] + 1/2
+
+Ainv["F","F"] <- Ainv["F","F"] + 2
+Ainv["F","B"] <- Ainv["F","B"] - 1
+Ainv["B","F"] <- Ainv["B","F"] - 1
+Ainv["F","D"] <- Ainv["F","D"] - 1
+Ainv["D","F"] <- Ainv["D","F"] - 1
+Ainv["B","B"] <- Ainv["B","B"] + 1/2
+Ainv["D","D"] <- Ainv["D","D"] + 1/2
+Ainv["B","D"] <- Ainv["B","D"] + 1/2
+Ainv["D","B"] <- Ainv["D","B"] + 1/2
+@
+\[A^{-1} = \left[
+\begin{array}{rrrrrr}
+1.67 & 0.00 & -0.67 & -0.67 & 0.00 & 0.00 \\ 
+  0.00 & 2.00 & 0.50 & 0.50 & -1.00 & -1.00 \\ 
+  -0.67 & 0.50 & 1.83 & 0.00 & -1.00 & 0.00 \\ 
+  -0.67 & 0.50 & 0.00 & 1.83 & 0.00 & -1.00 \\ 
+  0.00 & -1.00 & -1.00 & 0.00 & 2.00 & 0.00 \\ 
+  0.00 & -1.00 & 0.00 & -1.00 & 0.00 & 2.00 \\ 
+\end{array}
+\right]\]
+\item Prove that it is the inverse of the NMR
+<<echo=FALSE>>=
+A <- matrix(c(1,0,0.5,0.5,0.25,0.25,0,1,0,0,0.5,0.5,
+              0.5,0,1,0.25,0.5,0.125,0.5,0,0.25,1,0.125,0.5,
+              0.25,0.5,0.5,0.125,1,0.3125,0.25,0.5,0.125,0.5,0.3125,1), nrow = 6,byrow = TRUE)
+colnames(A) <- rownames(A) <- LETTERS[1:6]
+@
+\begin{scriptsize}
+\[
+\left[
+\begin{array}{rrrrrr}
+1.67 & 0.00 & -0.67 & -0.67 & 0.00 & 0.00 \\ 
+  0.00 & 2.00 & 0.50 & 0.50 & -1.00 & -1.00 \\ 
+  -0.67 & 0.50 & 1.83 & 0.00 & -1.00 & 0.00 \\ 
+  -0.67 & 0.50 & 0.00 & 1.83 & 0.00 & -1.00 \\ 
+  0.00 & -1.00 & -1.00 & 0.00 & 2.00 & 0.00 \\ 
+  0.00 & -1.00 & 0.00 & -1.00 & 0.00 & 2.00 \\ 
+\end{array}
+\right] \times \left[
+\begin{array}{rrrrrr}
+1.00 & 0.00 & 0.50 & 0.50 & 0.25 & 0.25 \\ 
+  0.00 & 1.00 & 0.00 & 0.00 & 0.50 & 0.50 \\ 
+  0.50 & 0.00 & 1.00 & 0.25 & 0.50 & 0.12 \\ 
+  0.50 & 0.00 & 0.25 & 1.00 & 0.12 & 0.50 \\ 
+  0.25 & 0.50 & 0.50 & 0.12 & 1.00 & 0.31 \\ 
+  0.25 & 0.50 & 0.12 & 0.50 & 0.31 & 1.00 \\ 
+\end{array}
+\right]= \left[\begin{array}{rrrrrr}
+1 & 0 & 0 & 0 & 0 & 0 \\ 
+  0 & 1 & 0 & 0 & 0 & 0 \\ 
+  0 & 0 & 1 & 0 & 0 & 0 \\ 
+  0 & 0 & 0 & 1 & 0 & 0 \\ 
+  0 & 0 & 0 & 0 & 1 & 0 \\ 
+  0 & 0 & 0 & 0 & 0 & 1 \\ 
+\end{array}\right] \]
+\[\left[
+\begin{array}{rrrrrr}
+1.00 & 0.00 & 0.50 & 0.50 & 0.25 & 0.25 \\ 
+  0.00 & 1.00 & 0.00 & 0.00 & 0.50 & 0.50 \\ 
+  0.50 & 0.00 & 1.00 & 0.25 & 0.50 & 0.12 \\ 
+  0.50 & 0.00 & 0.25 & 1.00 & 0.12 & 0.50 \\ 
+  0.25 & 0.50 & 0.50 & 0.12 & 1.00 & 0.31 \\ 
+  0.25 & 0.50 & 0.12 & 0.50 & 0.31 & 1.00 \\ 
+\end{array}
+\right] \times \left[
+\begin{array}{rrrrrr}
+1.67 & 0.00 & -0.67 & -0.67 & 0.00 & 0.00 \\ 
+  0.00 & 2.00 & 0.50 & 0.50 & -1.00 & -1.00 \\ 
+  -0.67 & 0.50 & 1.83 & 0.00 & -1.00 & 0.00 \\ 
+  -0.67 & 0.50 & 0.00 & 1.83 & 0.00 & -1.00 \\ 
+  0.00 & -1.00 & -1.00 & 0.00 & 2.00 & 0.00 \\ 
+  0.00 & -1.00 & 0.00 & -1.00 & 0.00 & 2.00 \\ 
+\end{array}
+\right] = \left[\begin{array}{rrrrrr}
+1 & 0 & 0 & 0 & 0 & 0 \\ 
+  0 & 1 & 0 & 0 & 0 & 0 \\ 
+  0 & 0 & 1 & 0 & 0 & 0 \\ 
+  0 & 0 & 0 & 1 & 0 & 0 \\ 
+  0 & 0 & 0 & 0 & 1 & 0 \\ 
+  0 & 0 & 0 & 0 & 0 & 1 \\ 
+\end{array}\right]\]
+\end{scriptsize}
+\end{enumerate}
+\item The model for analyses of cannon bone length recorded at birth in calves: $\underline{y} = X\underline{\beta} + Z\underline{u} + \underline{e}$ with $h^{2} = \frac{\sigma^{2}_{a}}{\sigma^{2}_{p}}$ and $\lambda = \frac{\sigma^{2}_{e}}{\sigma^{2}_{a}} = 1.75$. Using that information: 
+\begin{enumerate}
+\item Set up the Mixed Model Equations (MME)
+<<echo=FALSE>>=
+mu <- c(1,1,1,1,1,1)
+Gm <- c(1,1,0,0,0,1)
+Gf <- c(0,0,1,1,1,0)
+H1 <- c(1,0,1,0,0,0)
+H2 <- c(0,1,0,0,1,0)
+H3 <- c(0,0,0,1,0,1)
+X <- cbind(mu,Gm,Gf,H1,H2,H3)
+A <- c(1,0,0,0,0,0)
+B <- c(0,1,0,0,0,0)
+C <- c(0,0,1,0,0,0)
+D <- c(0,0,0,1,0,0)
+E <- c(0,0,0,0,1,0)
+F <- c(0,0,0,0,0,1)
+Z <- cbind(A,B,C,D,E,F)
+lambda <- 1.75
+y <- c(302,275,279,250,285,278)
+c22 <- ((t(Z) %*% Z) + (Ainv * lambda))
+numerator <- (rbind(cbind(t(X) %*% X, t(X) %*% Z),
+cbind(t(Z) %*% X, ((t(Z) %*% Z) + (Ainv * lambda)))))
+ninv <-solve(numerator[-c(3,6),-c(3,6)])
+ninv <- rbind(cbind(ninv[1:2,1:2],0,ninv[1:2,3:4],0,ninv[1:2,5:10]),0,cbind(ninv[3:4,1:2],0,ninv[3:4,3:4],0,ninv[3:4,5:10]),0,cbind(ninv[5:10,1:2],0,ninv[5:10,3:4],0,ninv[5:10,5:10]))
+rownames(ninv) <- rownames(numerator)
+C <- numerator
+Cminus <- ninv
+denominator <- (t(cbind(X,Z)) %*% y)
+hats <- ninv %*% denominator
+@
+\[\left[\begin{array}{c}302\\275\\279\\250\\285\\278\\\end{array}\right] = \left[\begin{tabular}{rrrrrr}
+1 & 1 & 0 & 1 & 0 & 0 \\ 
+  1 & 1 & 0 & 0 & 1 & 0 \\ 
+  1 & 0 & 1 & 1 & 0 & 0 \\ 
+  1 & 0 & 1 & 0 & 0 & 1 \\ 
+  1 & 0 & 1 & 0 & 1 & 0 \\ 
+  1 & 1 & 0 & 0 & 0 & 1 \\ 
+\end{tabular}\right] \times \left[\begin{array}{c}\mu\\G_{M}\\G_{F}\\H_{1}\\H_{2}\\H_{3} \end{array}\right] + \left[\begin{tabular}{rrrrrr}
+1 & 0 & 0 & 0 & 0 & 0 \\ 
+  0 & 1 & 0 & 0 & 0 & 0 \\ 
+  0 & 0 & 1 & 0 & 0 & 0 \\ 
+  0 & 0 & 0 & 1 & 0 & 0 \\ 
+  0 & 0 & 0 & 0 & 1 & 0 \\ 
+  0 & 0 & 0 & 0 & 0 & 1 \\ 
+\end{tabular}\right] \times \left[\begin{array}{c}u_{A}\\u_{B}\\u_{C}\\u_{D}\\u_{E}\\u_{F}\\\end{array}\right] + \left[\begin{array}{c}e_{A}\\e_{B}\\e_{C}\\e_{D}\\e_{E}\\e_{F}\\\end{array}\right]\]
+\begin{scriptsize}
+\[\left[\begin{tabular}{rrrrrrrrrrrr}
+6.00 & 3.00 & 3.00 & 2.00 & 2.00 & 2.00 & 1.00 & 1.00 & 1.00 & 1.00 & 1.00 & 1.00 \\ 
+  3.00 & 3.00 & 0.00 & 1.00 & 1.00 & 1.00 & 1.00 & 1.00 & 0.00 & 0.00 & 0.00 & 1.00 \\ 
+  3.00 & 0.00 & 3.00 & 1.00 & 1.00 & 1.00 & 0.00 & 0.00 & 1.00 & 1.00 & 1.00 & 0.00 \\ 
+  2.00 & 1.00 & 1.00 & 2.00 & 0.00 & 0.00 & 1.00 & 0.00 & 1.00 & 0.00 & 0.00 & 0.00 \\ 
+  2.00 & 1.00 & 1.00 & 0.00 & 2.00 & 0.00 & 0.00 & 1.00 & 0.00 & 0.00 & 1.00 & 0.00 \\ 
+  2.00 & 1.00 & 1.00 & 0.00 & 0.00 & 2.00 & 0.00 & 0.00 & 0.00 & 1.00 & 0.00 & 1.00 \\ 
+  1.00 & 1.00 & 0.00 & 1.00 & 0.00 & 0.00 & 3.92 & 0.00 & -1.17 & -1.17 & 0.00 & 0.00 \\ 
+  1.00 & 1.00 & 0.00 & 0.00 & 1.00 & 0.00 & 0.00 & 4.50 & 0.88 & 0.88 & -1.75 & -1.75 \\ 
+  1.00 & 0.00 & 1.00 & 1.00 & 0.00 & 0.00 & -1.17 & 0.88 & 4.21 & 0.00 & -1.75 & 0.00 \\ 
+  1.00 & 0.00 & 1.00 & 0.00 & 0.00 & 1.00 & -1.17 & 0.88 & 0.00 & 4.21 & 0.00 & -1.75 \\ 
+  1.00 & 0.00 & 1.00 & 0.00 & 1.00 & 0.00 & 0.00 & -1.75 & -1.75 & 0.00 & 4.50 & 0.00 \\ 
+  1.00 & 1.00 & 0.00 & 0.00 & 0.00 & 1.00 & 0.00 & -1.75 & 0.00 & -1.75 & 0.00 & 4.50 \\ 
+\end{tabular}\right]\times\left[\begin{tabular}{l}$\mu$\\$G_{M}$\\$G_{F}$\\$H_{1}$\\$H_{2}$\\$H_{3}$\\$u_{A}$\\$u_{B}$\\$u_{C}$\\$u_{D}$\\$u_{E}$\\$u_{F}$\\\end{tabular}\right] = \left[\begin{tabular}{r}
+1669 \\ 
+  855 \\ 
+  814 \\ 
+  581 \\ 
+  560 \\ 
+  528 \\ 
+  302 \\ 
+  275 \\ 
+  279 \\ 
+  250 \\ 
+  285 \\ 
+  278 \\ 
+\end{tabular}\right]\]
+\end{scriptsize}
+\end{enumerate}
+\item What is the narrow sense heritability $(h^{2})$ that corresponds to this value of $\lambda$?
+\begin{equation*}
+\begin{split}
+\lambda &= \frac{1-h^{2}}{h^{2}}\\
+1.75 &= \frac{1-h^{2}}{h^{2}}\\
+1.75h^{2} &= 1 - h^{2}\\
+1.75h^{2} + h^{2} &= 1\\
+2.75h^{2} &= 1\\
+h^{2} &= \frac{1}{2.75}\\
+h^{2} &= 0.36
+\end{split}
+\end{equation*}
+\item Why does the rank of the coefficient matrix not equal the order of the matrix? \textit{Because the rank of a matrix is defined as (a) the maximum number of linearly independent column vectors in the matrix or (b) the maximum number of linearly independent row vectors in the matrix. In this case, $G_{F}$ and $H_{3}$ are not independent rows/columns reducing the rank from 12 to 10.}
+\item Find a generalized inverse of the coefficient matrix. Probe that it is a generalized inverse.
+\[C^{-} = \left[
+\begin{tabular}{rrrrrrrrrrrr}
+1.11 & -0.41 & 0.00 & -0.70 & -0.79 & 0.00 & -0.20 & -0.06 & -0.22 & -0.46 & -0.18 & -0.35 \\ 
+  -0.41 & 0.91 & 0.00 & -0.15 & -0.00 & 0.00 & -0.01 & -0.19 & 0.21 & 0.07 & 0.10 & -0.16 \\ 
+  0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
+  -0.70 & -0.15 & 0.00 & 1.53 & 0.74 & 0.00 & -0.21 & 0.14 & -0.32 & 0.21 & -0.08 & 0.32 \\ 
+  -0.79 & -0.00 & 0.00 & 0.74 & 1.56 & 0.00 & 0.11 & -0.27 & -0.02 & 0.36 & -0.28 & 0.21 \\ 
+  0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
+  -0.20 & -0.01 & 0.00 & -0.21 & 0.11 & 0.00 & 0.52 & 0.03 & 0.30 & 0.25 & 0.15 & 0.16 \\ 
+  -0.06 & -0.19 & 0.00 & 0.14 & -0.27 & 0.00 & 0.03 & 0.55 & -0.01 & 0.02 & 0.28 & 0.28 \\ 
+  -0.22 & 0.21 & 0.00 & -0.32 & -0.02 & 0.00 & 0.30 & -0.01 & 0.56 & 0.16 & 0.27 & 0.06 \\ 
+  -0.46 & 0.07 & 0.00 & 0.21 & 0.36 & 0.00 & 0.25 & 0.02 & 0.16 & 0.54 & 0.09 & 0.30 \\ 
+  -0.18 & 0.10 & 0.00 & -0.08 & -0.28 & 0.00 & 0.15 & 0.28 & 0.27 & 0.09 & 0.54 & 0.16 \\ 
+  -0.35 & -0.16 & 0.00 & 0.32 & 0.21 & 0.00 & 0.16 & 0.28 & 0.06 & 0.30 & 0.16 & 0.56 \\ 
+\end{tabular}
+\right]
+\]
+<<>>=
+round(Cminus %*% C)
+round(C %*% Cminus %*% C,2)
+@
+\item Show that these provide a solution of the MME you developed in question 3: $\hat{\mu} = 256.8636$, $\hat{G}_{M} = 14.03433$, $\hat{G}_{F} = 0$, $\hat{H}_{1} = 25.89654$, $\hat{H}_{2} = 15.68469$, $\hat{H}_{3}=0$, $\hat{u}_{A}=0.821931$, $\hat{u}_{B}=-0.54795$, $\hat{u}_{C}=0.623531$, $\hat{u}_{D}=-0.21257$, $\hat{u}_{E}=1.417117$, $\hat{u}_{F}=0.451115$
+<<>>=
+betaHat <- c(256.8636, 14.03433, 0, 25.89654, 15.68469, 0)
+uHat <- c(0.821931, -0.54795, 0.623531, -0.21257, 1.417117, 0.451115)
+print(yHat <- X %*% betaHat + Z %*% uHat)
+@
+\item What does these solutions estimate? \textit{A set of numerical values in function of $G_{F}$ and $H_{3}$ that satisfies the system of equations.}
+<<>>=
+sE <- round(Cminus %*% C)
+sE <- paste(colnames(sE),apply(sE,1,function(x){
+  paste(x[x!=0],colnames(sE)[x!=0],sep = "", collapse = "+")
+  }), sep = "=")
+sE <- gsub("\\+\\-","\\-",gsub("1","",gsub("=$","=0",sE)))
+writeLines(sE)
+@
+\item Describe the difference between fixed and random effects \textit{Fixed effects are constant across individuals, for that reason, these effects are computed as average for the given sample sharing a given factor. Meanwhile, random effects vary from one to another individual, for that reason, a unique value is calculated for each independently.}
+\item In this model: $y_{ijk}=\mu + H_{i} + L_{j} + C_{k} + e_{ijk}$ in which $y_{ijk}$ is 305-d milk yield of cows, $\mu$ is the overal mean, $H_{i}$ is the fixed effect in the $i^{th}$ herd, $L_{j}$ is the fixed effect of the $j^{th}$ lactation, $C_{k}$ is the effect of the $k^{th}$ cow, and $e_{ijk}$ is the residual associated with the $ijk^{th}$ observation.
+\[P = A + NA + PE + TE\]
+Detail any differences in $\sigma^{2}_{c}$ when cows are modeled as fixed effects vs when (in separate analyses) they are modeled as random effects. Where would you expect the additive component of phenotype to be under each of those parameterizations? \textit{When cows are modeled as fixed effects, the computed values for each cow are the deviation of that specific cow with respect to another one used as a point of comparison (usually the last one); under this parameterization, the $\sigma^{2}_{c}$ are underestimated and the portion of the variance not explained will be assigned to the $\sigma^{2}_{e}$. When cows are modeled as random effects, the computed values for each cow are the deviation of that specific cow with respect to the mean value of all the cows, under this parameterization, the $\sigma^{2}_{c}$ are optimized to be the maximum and then the $\sigma^{2}_{e}$ will be minimized.}
+\end{enumerate}
+\end{document}
