@@ -43,7 +43,18 @@ COW&HERD&LACTATION&MILK FAT (lb)\\
 Given $y_{ijk} = \mu + H_{i} + L_{j} + C_{k} + e_{ijk}$ where $\mu$, herd ($H_{i}$) and lactation $L_{j}$ are fixed effects; cows ($C_{k}$) and residuals ($e_{ijk}$) are random effects and $var\left[\begin{array}{c}\underline{c}\\\underline{e}\end{array}\right] = \left[\begin{array}{cc}A\sigma^{2}_{c}&0\\0&I\sigma^{2}_{e}\end{array}\right]$ so the MME are: $\left[\begin{array}{cc}X'X&X'Z\\Z'X&Z'Z+A^{-1}\lambda\end{array}\right]\times \left[\begin{array}{c}\underline{\hat{\beta}}\\\underline{\hat{u}}\end{array}\right]=\left[\begin{array}{c}X'\underline{y}\\Z'\underline{y}\end{array}\right]$ with $\lambda = \frac{\sigma^{2}_{e}}{\sigma^{2}_{c}}$.
 \begin{enumerate}
 \item In the above model, indicate what each subscript indexes.
+\begin{description}
+\item[i] = The herd to which the cow belong.
+\item[j] = The lactation time in which the trait was measured.
+\item[k] = Each one of the cows.
+\end{description}
 \item What are the elements in $\underline{\hat{\beta}}$ and $\underline{\hat{u}}$
+\begin{multicols}{2}
+\begin{description}
+\item[$\underline{\hat{\beta'}}$] = $\left[\begin{array}{ccccc}\mu&H_{1}&H_{2}&L_{1}&L_{2}\end{array}\right]$
+\item[$\underline{\hat{u'}}$] = $\left[\begin{array}{cccccc}C_{1}&S_{1}&C_{3}&C_{2}&C_4&C_5\\\end{array}\right]$
+\end{description}
+\end{multicols}
 \end{enumerate}
 New pedigree:
 \begin{center}
@@ -81,9 +92,83 @@ New pedigree:
 \end{center}
 \begin{enumerate}[resume]
 \item Calculate $A^{-1}$ using the Henderson's method for rapid inversion of $A$.
+\[A^{-1}=\left[\begin{tabular}{rrrrrr}
+1.50 & 0.50 & 0.00 & -1.00 & 0.00 & 0.00 \\ 
+  0.50 & 2.00 & 0.50 & -1.00 & -1.00 & 0.00 \\ 
+  0.00 & 0.50 & 1.83 & 0.00 & -1.00 & -0.67 \\ 
+  -1.00 & -1.00 & 0.00 & 2.00 & 0.00 & 0.00 \\ 
+  0.00 & -1.00 & -1.00 & 0.00 & 2.00 & 0.00 \\ 
+  0.00 & 0.00 & -0.67 & 0.00 & 0.00 & 1.33 \\ 
+\end{tabular}\right]\]
 \item Write the observations in terms of the model $\underline{y} = X\underline{\beta}+Z\underline{u}+\underline{e}$
+\begin{equation*}
+\left[\begin{tabular}{r}
+600 \\ 
+  680 \\ 
+  500 \\ 
+  800 \\ 
+  895 \\ 
+  775 \\ 
+  600 \\ 
+  715 \\ 
+\end{tabular}\right] =  \left[\begin{tabular}{rrrrr}
+1 & 1 & 0 & 1 & 0 \\ 
+  1 & 1 & 0 & 0 & 1 \\ 
+  1 & 1 & 0 & 1 & 0 \\ 
+  1 & 0 & 1 & 1 & 0 \\ 
+  1 & 0 & 1 & 0 & 1 \\ 
+  1 & 0 & 1 & 1 & 0 \\ 
+  1 & 0 & 1 & 1 & 0 \\ 
+  1 & 0 & 1 & 0 & 1 \\ 
+\end{tabular}\right]\left[\begin{array}{c}\mu\\H_{1}\\H_{2}\\L_{1}\\L_{2}\end{array}\right] + \left[\begin{tabular}{rrrrrr}
+1 & 0 & 0 & 0 & 0 & 0 \\ 
+  1 & 0 & 0 & 0 & 0 & 0 \\ 
+  0 & 0 & 0 & 1 & 0 & 0 \\ 
+  0 & 0 & 1 & 0 & 0 & 0 \\ 
+  0 & 0 & 1 & 0 & 0 & 0 \\ 
+  0 & 0 & 0 & 0 & 1 & 0 \\ 
+  0 & 0 & 0 & 0 & 0 & 1 \\ 
+  0 & 0 & 0 & 0 & 0 & 1 \\ 
+\end{tabular}\right]\left[\begin{array}{c}C_{1}\\S_{1}\\C_{3}\\C_{2}\\C_4\\C_5\end{array}\right] + \left[\begin{array}{c}e_{111}\\e_{121}\\e_{112}\\e_{213}\\e_{223}\\e_{214}\\e_{215}\\e_{225}\end{array}\right]
+\end{equation*}
 \item Construct MME with $\lambda = 1.5$
+\begin{equation*}
+\left[
+\begin{tabular}{rrrrrrrrrrr}
+8.00 & 3.00 & 5.00 & 5.00 & 3.00 & 2.00 & 0.00 & 2.00 & 1.00 & 1.00 & 2.00 \\ 
+  3.00 & 3.00 & 0.00 & 2.00 & 1.00 & 2.00 & 0.00 & 0.00 & 1.00 & 0.00 & 0.00 \\ 
+  5.00 & 0.00 & 5.00 & 3.00 & 2.00 & 0.00 & 0.00 & 2.00 & 0.00 & 1.00 & 2.00 \\ 
+  5.00 & 2.00 & 3.00 & 5.00 & 0.00 & 1.00 & 0.00 & 1.00 & 1.00 & 1.00 & 1.00 \\ 
+  3.00 & 1.00 & 2.00 & 0.00 & 3.00 & 1.00 & 0.00 & 1.00 & 0.00 & 0.00 & 1.00 \\ 
+  2.00 & 2.00 & 0.00 & 1.00 & 1.00 & 4.25 & 0.75 & 0.00 & -1.50 & 0.00 & 0.00 \\ 
+  0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.75 & 3.00 & 0.75 & -1.50 & -1.50 & 0.00 \\ 
+  2.00 & 0.00 & 2.00 & 1.00 & 1.00 & 0.00 & 0.75 & 4.75 & 0.00 & -1.50 & -1.00 \\ 
+  1.00 & 1.00 & 0.00 & 1.00 & 0.00 & -1.50 & -1.50 & 0.00 & 4.00 & 0.00 & 0.00 \\ 
+  1.00 & 0.00 & 1.00 & 1.00 & 0.00 & 0.00 & -1.50 & -1.50 & 0.00 & 4.00 & 0.00 \\ 
+  2.00 & 0.00 & 2.00 & 1.00 & 1.00 & 0.00 & 0.00 & -1.00 & 0.00 & 0.00 & 4.00 \\ 
+\end{tabular}\right]\left[\begin{array}{c}\mu\\H_{1}\\H_{2}\\L_{1}\\L_{2}\\C_{1}\\S_{1}\\C_{3}\\C_{2}\\C_{4}\\C_{5}\end{array}\right] = \left[\begin{array}{c}5565 \\ 
+  1780 \\ 
+  3785 \\ 
+  3275 \\ 
+  2290 \\ 
+  1280 \\ 
+  0 \\ 
+  1695 \\ 
+  500 \\ 
+  775 \\ 
+  1315 \\ \end{array}\right]
+\end{equation*}
 \item Show algebraically that $\lambda = \frac{1-h^{2}}{h^{2}}$
+\begin{equation*}
+\begin{split}
+\frac{\sigma^{2}_{e}}{\sigma^{2}_{a}} &= \frac{1-h^{2}}{h^{2}}\\
+\frac{\sigma^{2}_{e}}{\sigma^{2}_{a}} &= \frac{1-\frac{\sigma^{2}_{a}}{\sigma^{2}_{a} +\sigma^{2}_{e}}}{\frac{\sigma^{2}_{a}}{\sigma^{2}_{a}+\sigma^{2}_{e}}}\\
+\frac{\sigma^{2}_{e}}{\sigma^{2}_{a}} &= \frac{\frac{\sigma^{2}_{a}+\sigma^{2}_{e}}{\sigma^{2}_{a}+\sigma^{2}_{e}}-\frac{\sigma^{2}_{a}}{\sigma^{2}_{a} +\sigma^{2}_{e}}}{\frac{\sigma^{2}_{a}}{\sigma^{2}_{a}+\sigma^{2}_{e}}}\\
+\frac{\sigma^{2}_{e}}{\sigma^{2}_{a}} &= \frac{\frac{\sigma^{2}_{a}+\sigma^{2}_{e}-\sigma^{2}_{a}}{\sigma^{2}_{a}+\sigma^{2}_{e}}}{\frac{\sigma^{2}_{a}}{\sigma^{2}_{a}+\sigma^{2}_{e}}}\\
+\frac{\sigma^{2}_{e}}{\sigma^{2}_{a}} &= \frac{\frac{\sigma^{2}_{e}}{\sigma^{2}_{a}+\sigma^{2}_{e}}}{\frac{\sigma^{2}_{a}}{\sigma^{2}_{a}+\sigma^{2}_{e}}}\\
+\frac{\sigma^{2}_{e}}{\sigma^{2}_{a}} &= \frac{\sigma^{2}_{e}}{\sigma^{2}_{a}}\\
+\end{split}
+\end{equation*}
 \item The row equation in the MME corresponding to $\hat{S}_{1}$ is:
 \begin{equation*}
 \begin{split}
@@ -93,13 +178,109 @@ New pedigree:
 \end{split}
 \end{equation*}
 \begin{enumerate}
-\item Look at the pedigree above (and this prediction equation) and describe in words how $\hat{S_{1}}$ is being predicted here.
+\item Look at the pedigree above (and this prediction equation) and describe in words how $\hat{S_{1}}$ is being predicted here. \textit{$S_{1}$ is predicted as the average of their progeny after removing the expected proportion given by the cows used as genetic complement.}
 \item Show that $\mu = 818.87$; $\hat{H}_{1}=-165.15$; $\hat{H}_{2} = 0$; $\hat{L}_{1}=-100.57$; $\hat{L}_{2}=0$; $\hat{C}_{1}=14.63$; $\hat{C}_{2}=-9.27$; $\hat{C}_{3}=31.57$; $\hat{C}_{4}=24.55$; $\hat{C}_{5}=-47.63$; and $\hat{S_{1}}$ (calculated as above) provides a solution to the system of equations.
+\begin{footnotesize}
+\begin{equation*}
+\left[
+\begin{tabular}{rrrrrrrrrrr}
+8.00 & 3.00 & 5.00 & 5.00 & 3.00 & 2.00 & 0.00 & 2.00 & 1.00 & 1.00 & 2.00 \\ 
+  3.00 & 3.00 & 0.00 & 2.00 & 1.00 & 2.00 & 0.00 & 0.00 & 1.00 & 0.00 & 0.00 \\ 
+  5.00 & 0.00 & 5.00 & 3.00 & 2.00 & 0.00 & 0.00 & 2.00 & 0.00 & 1.00 & 2.00 \\ 
+  5.00 & 2.00 & 3.00 & 5.00 & 0.00 & 1.00 & 0.00 & 1.00 & 1.00 & 1.00 & 1.00 \\ 
+  3.00 & 1.00 & 2.00 & 0.00 & 3.00 & 1.00 & 0.00 & 1.00 & 0.00 & 0.00 & 1.00 \\ 
+  2.00 & 2.00 & 0.00 & 1.00 & 1.00 & 4.25 & 0.75 & 0.00 & -1.50 & 0.00 & 0.00 \\ 
+  0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.75 & 3.00 & 0.75 & -1.50 & -1.50 & 0.00 \\ 
+  2.00 & 0.00 & 2.00 & 1.00 & 1.00 & 0.00 & 0.75 & 4.75 & 0.00 & -1.50 & -1.00 \\ 
+  1.00 & 1.00 & 0.00 & 1.00 & 0.00 & -1.50 & -1.50 & 0.00 & 4.00 & 0.00 & 0.00 \\ 
+  1.00 & 0.00 & 1.00 & 1.00 & 0.00 & 0.00 & -1.50 & -1.50 & 0.00 & 4.00 & 0.00 \\ 
+  2.00 & 0.00 & 2.00 & 1.00 & 1.00 & 0.00 & 0.00 & -1.00 & 0.00 & 0.00 & 4.00 \\ 
+\end{tabular}\right]\left[\begin{tabular}{r}
+818.87 \\ 
+  -165.15 \\ 
+  0.00 \\ 
+  -100.57 \\ 
+  0.00 \\ 
+  14.63 \\ 
+  -3.91 \\ 
+  31.57 \\ 
+  -9.27 \\ 
+  24.55 \\ 
+  -47.65 \\ 
+\end{tabular}\right]=\left[\begin{tabular}{r}
+5565 \\ 
+  1780 \\ 
+  3785 \\ 
+  3275 \\ 
+  2290 \\ 
+  1280 \\ 
+  0 \\ 
+  1695 \\ 
+  500 \\ 
+  775 \\ 
+  1315 \\ 
+\end{tabular}\right]
+\end{equation*}
+\end{footnotesize}
 \end{enumerate}
-\item What do $\hat{H}_{1}$ and $\hat{L}_{1}$ estimate?
-\item Show that $1'A^{-1}\hat{\underline{u}}=0$. What does this mean?
+\item What do $\hat{H}_{1}$ and $\hat{L}_{1}$ estimate? $H_{1} = H_{1} - H_{2}$ and $L_{1}=L_{1} - L_{2}$
+\item Show that $1'A^{-1}\hat{\underline{u}}=0$. What does this mean? \textit{As cows and sire were treated as random effects they are assumed to be normally distributed with mean 0. What $1'A^{-1}\hat{\underline{u}}$ do is to sum the standardized values of $\hat{u}$ across generations}
+\begin{Schunk}
+\begin{Sinput}
+> t(rep(1,6)) %*% Ainv %*% uHat
+\end{Sinput}
+\begin{Soutput}
+             [,1]
+[1,] 1.847411e-13
+\end{Soutput}
+\end{Schunk}
 \item What are the predicted phenotypes $\hat{p} = \underline{y} - X\underline{\hat{\beta}}$
+\begin{Schunk}
+\begin{Sinput}
+> y - (X %*% betaHat)
+\end{Sinput}
+\begin{Soutput}
+           [,1]
+[1,]   46.85338
+[2,]   26.27948
+[3,]  -53.14662
+[4,]   81.70794
+[5,]   76.13404
+[6,]   56.70794
+[7,] -118.29206
+[8,] -103.86596
+\end{Soutput}
+\end{Schunk}
 \item Find $\underline{\hat{e}}'\underline{\hat{e}}$ and compare results to those in Homework 3.
+\begin{Schunk}
+\begin{Sinput}
+> yHat <- X %*% betaHat + Z %*% uHat
+> eHat <- (y - yHat)
+> t(eHat) %*% eHat
+\end{Sinput}
+\begin{Soutput}
+         [,1]
+[1,] 16785.19
+\end{Soutput}
+\end{Schunk}
+\textit{Comparing the $\underline{\hat{e}}'\underline{\hat{e}} = 10719.24$ from the Homework 3 when cows where treated as random effects but unrelated and the actual $\underline{\hat{e}}'\underline{\hat{e}} = 16785.19$ taking into account the relatedness of the individuals seems that using that information improve the accuracy of the computed breeding value for the individuals in the model.}
 \item Do the predicted cow breeding values rank the same as they did in Homework 3 when all cows were treated as unrelated? Explain why or why not.
+\begin{Schunk}
+\begin{Sinput}
+> oldBV <- c(21.5,-21.5,43.8,21,-64.8)
+> newBV <- c(14.63,-9.27,31.57,24.55,-47.63)
+> order(oldBV, decreasing = TRUE) 
+\end{Sinput}
+\begin{Soutput}
+[1] 3 1 4 2 5
+\end{Soutput}
+\begin{Sinput}
+> order(newBV, decreasing = TRUE)
+\end{Sinput}
+\begin{Soutput}
+[1] 3 4 1 2 5
+\end{Soutput}
+\end{Schunk}
+\textit{No, they dont rank the same as they did in Homework 3 when all cows were treated as unrelated, because relatedness information affects the breeding values calculation and if the data is correct improve the prediction the genetic and environmental trend}
 \end{enumerate}
 \end{document}
