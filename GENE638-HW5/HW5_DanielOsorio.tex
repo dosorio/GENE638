@@ -55,137 +55,105 @@ Pedrigree:
 \end{multicols}
 \begin{enumerate}
 \item Construct the numerator relationship and its inverse
-\begin{Schunk}
-\begin{Soutput}
-     A1   A2  A3  M1  M2
-A1 1.00 0.25 0.5 0.5 0.0
-A2 0.25 1.00 0.5 0.0 0.5
-A3 0.50 0.50 1.0 0.0 0.0
-M1 0.50 0.00 0.0 1.0 0.0
-M2 0.00 0.50 0.0 0.0 1.0
-\end{Soutput}
-\begin{Soutput}
-   A1 A2   A3   M1   M2
-A1  2  0 -1.0 -1.0  0.0
-A2  0  2 -1.0  0.0 -1.0
-A3 -1 -1  2.0  0.5  0.5
-M1 -1  0  0.5  1.5  0.0
-M2  0 -1  0.5  0.0  1.5
-\end{Soutput}
-\end{Schunk}
+\begin{equation*}
+A = \left[
+\begin{tabular}{rrr}
+1.00 & 0.25 & 0.50 \\ 
+  0.25 & 1.00 & 0.50 \\ 
+  0.50 & 0.50 & 1.00 \\ 
+\end{tabular}
+\right]\\
+\hspace{1cm}
+A^{-1} = \left[
+\begin{tabular}{rrr}
+1.33 & 0.00 & -0.67 \\ 
+  0.00 & 1.33 & -0.67 \\ 
+  -0.67 & -0.67 & 1.67 \\ 
+\end{tabular}
+\right]
+\end{equation*}
 \item The predicted breeding value of the unidentified parent of animal 1 is $\frac{2}{3}(\hat{A_{1}}-\frac{1}{2}\hat{A_{3}})$ and that for the unidentified parent of animal 2 is $\frac{2}{3}(\hat{A_{2}}-\frac{1}{2}\hat{A_{3}})$. Identify the base generation animals and show that $1'A^{-1}\hat{u} = 0$ is consistent with the sum of breeding values of base generation being 0.
-\begin{Schunk}
-\begin{Sinput}
-> X <- matrix(c(1,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,1), ncol = 3, byrow = FALSE)
-> Z <- matrix(c(1,0,1,0,1,0,0,1,0,1,0,1,0,0,0,0,0,0,
-+               0,0,0,0,0,0,0,0,0,0,0,0), ncol = 5)
-> colnames(Z) <- c("A1","A2","A3","M1","M2")
-> colnames(X) <- c("Y1", "Y2", "Y3")
-> X1 <- rbind(
-+   cbind(t(X) %*% X, t(X) %*% Z), 
-+   cbind(t(Z) %*% X, t(Z) %*% Z + Ainv)
-+   )
-> y <- c(80,70,86,72,92,78)
-> Y1 <- c(t(X) %*% y,t(Z) %*% y)
-> u <- round(solve(X1) %*% Y1,2)
-> rep(1,5) %*% (Ainv %*% u[4:8])
-\end{Sinput}
-\begin{Soutput}
-              [,1]
-[1,] -1.776357e-15
-\end{Soutput}
-\end{Schunk}
+\begin{equation*}
+\left[
+\begin{tabular}{rrrrr}
+1 & 1 & 1 & 1& 1 \\ 
+\end{tabular}
+\right] \left[
+\begin{tabular}{rrrrr}
+2.00 & 0.00 & -1.00 & -1.00 & -0.00 \\ 
+  0.00 & 2.00 & -1.00 & -0.00 & -1.00 \\ 
+  -1.00 & -1.00 & 2.00 & 0.50 & 0.50 \\ 
+  -1.00 & -0.00 & 0.50 & 1.50 & 0.00 \\ 
+  -0.00 & -1.00 & 0.50 & 0.00 & 1.50 \\ 
+\end{tabular}
+\right] \left[\begin{tabular}{r}
+4.38 \\ 
+  -4.38 \\ 
+  0.00 \\ 
+  2.92 \\ 
+  -2.92 \\ 
+\end{tabular}
+\right] = -1.332268e-15
+\end{equation*}
+\begin{equation*}
+\begin{tabular}{rrrrr}
+ A1 & A2 & \textbf{A3} & \textbf{M1} & \textbf{M2} \\ 
+ 5.84 & -5.84 & 0.00 & 0.00 & 0.00 \\ 
+\end{tabular}
+\end{equation*}
 \item Write the data in general matrix terms $y = X\beta + Zu + e$ for the model $Y_{ij} = \text{Year}_{i} + \text{Animal}_{j} + e_{ij}$ where $\text{Year}_{i} = \mu + \text{Year}_{i}$. Include animal $3$ in $\hat{u}$ as in (2)
-\begin{Schunk}
-\begin{Sinput}
-> X
-\end{Sinput}
-\begin{Soutput}
-     Y1 Y2 Y3
-[1,]  1  0  0
-[2,]  1  0  0
-[3,]  0  1  0
-[4,]  0  1  0
-[5,]  0  0  1
-[6,]  0  0  1
-\end{Soutput}
-\begin{Sinput}
-> Z[,1:3]
-\end{Sinput}
-\begin{Soutput}
-     A1 A2 A3
-[1,]  1  0  0
-[2,]  0  1  0
-[3,]  1  0  0
-[4,]  0  1  0
-[5,]  1  0  0
-[6,]  0  1  0
-\end{Soutput}
-\end{Schunk}
+\begin{equation*}
+\left[\begin{tabular}{r}
+80\\ 
+  70 \\ 
+  86 \\ 
+  72 \\ 
+  92 \\ 
+  78 \\ 
+\end{tabular}\right] = \left[
+\begin{tabular}{rrr}
+1 & 0 & 0 \\ 
+  1 & 0 & 0 \\ 
+  0 & 1 & 0 \\ 
+  0 & 1 & 0 \\ 
+  0 & 0 & 1 \\ 
+  0 & 0 & 1 \\ 
+\end{tabular}
+\right] \left[\begin{tabular}{r}$\beta_{1}$\\$\beta_{2}$\\$\beta_{3}$\end{tabular}\right] +
+\left[
+\begin{tabular}{rrr}
+1 & 0 & 0 \\ 
+  0 & 1 & 0 \\ 
+  1 & 0 & 0 \\ 
+  0 & 1 & 0 \\ 
+  1 & 0 & 0 \\ 
+  0 & 1 & 0 \\ 
+\end{tabular}
+\right] \left[\begin{tabular}{r}$u_{1}$\\$u_{2}$\\$u_{3}$\end{tabular}\right] + \left[\begin{tabular}{r}$e_{11}$\\$e_{21}$\\$e_{12}$\\$e_{22}$\\$e_{13}$\\$e_{23}$\end{tabular}\right]
+\end{equation*}
 \item Assuming $R=I\sigma^{2}_{e}$ and $G = A\sigma^{2}_{a}$ and $\lambda = \frac{\sigma^{2}_{e}}{\sigma^{2}_{a}} = 3$, write the MME for model in (3)
-\begin{Schunk}
-\begin{Sinput}
-> lambda <- 3
-> Z <- Z[,1:3]
-> Ainv <- solve(A[1:3,1:3])
-> Z
-\end{Sinput}
-\begin{Soutput}
-     A1 A2 A3
-[1,]  1  0  0
-[2,]  0  1  0
-[3,]  1  0  0
-[4,]  0  1  0
-[5,]  1  0  0
-[6,]  0  1  0
-\end{Soutput}
-\begin{Sinput}
-> X1 <- rbind(
-+   cbind(t(X) %*% X, t(X) %*% Z),
-+   cbind(t(Z) %*% X, t(Z) %*% Z + Ainv*lambda)
-+   )
-> y <- c(80,70,86,72,92,78)
-> Y1 <- c(t(X) %*% y,t(Z) %*% y)
-> X1
-\end{Sinput}
-\begin{Soutput}
-   Y1 Y2 Y3            A1            A2 A3
-Y1  2  0  0  1.000000e+00  1.000000e+00  0
-Y2  0  2  0  1.000000e+00  1.000000e+00  0
-Y3  0  0  2  1.000000e+00  1.000000e+00  0
-A1  1  1  1  7.000000e+00  1.249001e-16 -2
-A2  1  1  1  4.440892e-17  7.000000e+00 -2
-A3  0  0  0 -2.000000e+00 -2.000000e+00  5
-\end{Soutput}
-\begin{Sinput}
-> Y1
-\end{Sinput}
-\begin{Soutput}
-[1] 150 158 170 258 220   0
-\end{Soutput}
-\begin{Sinput}
-> round(solve(X1) %*% Y1,4)
-\end{Sinput}
-\begin{Soutput}
-      [,1]
-Y1 75.0000
-Y2 79.0000
-Y3 85.0000
-A1  2.7143
-A2 -2.7143
-A3  0.0000
-\end{Soutput}
-\end{Schunk}
+\begin{equation*}
+\left[
+\begin{tabular}{rrrrrr}
+2 & 0 & 0 & 1 & 1 & 0 \\ 
+  0 & 2 & 0 & 1 & 1 & 0 \\ 
+  0 & 0 & 2 & 1 & 1 & 0 \\ 
+  1 & 1 & 1 & 7 & 0 & -2 \\ 
+  1 & 1 & 1 & 0 & 7 & -2 \\ 
+  0 & 0 & 0 & -2 & -2 & 5 \\ 
+\end{tabular}
+\right] \left[\begin{tabular}{r}$\beta_1$\\$\beta_2$\\$\beta_3$\\$u_1$\\$u_2$\\$u_3$\end{tabular}\right] = \left[
+\begin{tabular}{r}
+150 \\ 
+  158 \\ 
+  170 \\ 
+  258 \\ 
+  220 \\ 
+  0 \\ 
+\end{tabular}
+\right]
+\end{equation*}
 \item From the row of the MME corresponding to $\hat{A}_{3}$ show that $\hat{A}_{3} = \frac{2}{5}(\hat{A}_{1} + \hat{A}_{2})$
-\begin{Schunk}
-\begin{Sinput}
-> X1[6,]
-\end{Sinput}
-\begin{Soutput}
-Y1 Y2 Y3 A1 A2 A3 
- 0  0  0 -2 -2  5 
-\end{Soutput}
-\end{Schunk}
 \begin{equation*}
 \begin{split}
 0 &= -2\hat{A}_1 -2\hat{A}_2 + 5\hat{A}_3 \\
@@ -196,51 +164,17 @@ Y1 Y2 Y3 A1 A2 A3
 \end{split}
 \end{equation*}
 \item Absorb the year equations into the animal equations to obtain a system of equations involving only the unknown breeding values $\hat{A}_{1}, \hat{A}_{2},$ and $\hat{A}_{3}$
-\begin{Schunk}
-\begin{Sinput}
-> M <- diag(6) - (X %*% solve(t(X) %*% X) %*% t(X))
-> M
-\end{Sinput}
-\begin{Soutput}
-     [,1] [,2] [,3] [,4] [,5] [,6]
-[1,]  0.5 -0.5  0.0  0.0  0.0  0.0
-[2,] -0.5  0.5  0.0  0.0  0.0  0.0
-[3,]  0.0  0.0  0.5 -0.5  0.0  0.0
-[4,]  0.0  0.0 -0.5  0.5  0.0  0.0
-[5,]  0.0  0.0  0.0  0.0  0.5 -0.5
-[6,]  0.0  0.0  0.0  0.0 -0.5  0.5
-\end{Soutput}
-\begin{Sinput}
-> C22 <- t(Z) %*% M %*% Z + (Ainv * lambda)
-> C22
-\end{Sinput}
-\begin{Soutput}
-     A1   A2 A3
-A1  5.5 -1.5 -2
-A2 -1.5  5.5 -2
-A3 -2.0 -2.0  5
-\end{Soutput}
-\begin{Sinput}
-> b <- t(Z) %*% M %*% y
-> b
-\end{Sinput}
-\begin{Soutput}
-   [,1]
-A1   19
-A2  -19
-A3    0
-\end{Soutput}
-\begin{Sinput}
-> u <- round(solve(t(Z) %*% M %*% Z + (Ainv * lambda)) %*% t(Z) %*% M %*% y,4)
-> u
-\end{Sinput}
-\begin{Soutput}
-      [,1]
-A1  2.7143
-A2 -2.7143
-A3  0.0000
-\end{Soutput}
-\end{Schunk}
+\begin{equation*}
+\left[\begin{tabular}{rrr}
+0.280 & 0.137 & 0.167 \\ 
+  0.137 & 0.280 & 0.167 \\ 
+  0.167 & 0.167 & 0.333 \\ 
+\end{tabular}\right]  \left[\begin{tabular}{r}$u_{1}$\\$u_{2}$\\$u_{3}$\end{tabular}\right] =  \left[\begin{tabular}{r}
+19.0 \\ 
+  -19.0 \\ 
+  0.0 \\ 
+\end{tabular}\right]
+\end{equation*}
 \item What are the effective numbers of observations on all three animals?
 \begin{Schunk}
 \begin{Sinput}
@@ -252,16 +186,12 @@ A3  0.0000
 \end{Soutput}
 \end{Schunk}
 \item From the appropiate row of the absorbed MME, once again show that $\hat{A}_{3} = \frac{2}{5}(\hat{A}_{1} + \hat{A}_{2})$
-\begin{Schunk}
-\begin{Sinput}
-> C22[3,]
-\end{Sinput}
-\begin{Soutput}
-A1 A2 A3 
--2 -2  5 
-\end{Soutput}
-\end{Schunk}
 \begin{equation*}
+C_{22} = \left[\begin{tabular}{rrr}
+5.5 & -1.5 & -2.0 \\ 
+  -1.5 & 5.5 & -2.0 \\ 
+  -2.0 & -2.0 & 5.0 \\ 
+\end{tabular}\right]\\
 \begin{split}
 0 &= -2\hat{A}_1 -2\hat{A}_2 + 5\hat{A}_3 \\
 -5\hat{A}_3 &= -2\hat{A}_1 - 2\hat{A}_2 \\
@@ -271,86 +201,57 @@ A1 A2 A3
 \end{split}
 \end{equation*}
 \item Using ordinary Gauss-Seidel iteration, find two succesive aproximations to the predicted breeding values in (6)
+\begin{equation*}
+L = \left[\begin{tabular}{rrr}
+0.0 & 0.0 & 0.0 \\ 
+  -1.5 & 0.0 & 0.0 \\ 
+  -2.0 & -2.0 & 0.0 \\ 
+\end{tabular}\right] \hspace{1cm} D = \left[\begin{tabular}{rrr}
+5.5 & 0.0 & 0.0 \\ 
+  0.0 & 5.5 & 0.0 \\ 
+  0.0 & 0.0 & 5.0 \\ 
+\end{tabular}\right] \hspace{1cm} b = \left[\begin{tabular}{r}
+19.0 \\ 
+  -19.0 \\ 
+  0.0 \\ 
+\end{tabular}\right]
+\end{equation*}
 \begin{Schunk}
 \begin{Sinput}
 > L <- D <- matrix(0,nrow = nrow(C22), ncol = ncol(C22))
 > L[lower.tri(L)] <- C22[lower.tri(C22)]
 > diag(D) <- diag(C22)
-> L
-\end{Sinput}
-\begin{Soutput}
-     [,1] [,2] [,3]
-[1,]  0.0    0    0
-[2,] -1.5    0    0
-[3,] -2.0   -2    0
-\end{Soutput}
-\begin{Sinput}
-> D
-\end{Sinput}
-\begin{Soutput}
-     [,1] [,2] [,3]
-[1,]  5.5  0.0    0
-[2,]  0.0  5.5    0
-[3,]  0.0  0.0    5
-\end{Soutput}
-\begin{Sinput}
 > x0 <- solve(D) %*% b
 > for(i in 1:2){
 +   Xi <- solve(L + D) %*% (b - t(L) %*% x0)
++   rownames(Xi) <- c("A1","A2","A3")
 +   print(Xi)
 +   x0 <- Xi
 + }
 \end{Sinput}
 \begin{Soutput}
-           [,1]
-[1,]  2.5123967
-[2,] -2.7693464
-[3,] -0.1027799
-           [,1]
-[1,]  2.6618947
-[2,] -2.7659487
-[3,] -0.0416216
+         [,1]
+A1  2.5123967
+A2 -2.7693464
+A3 -0.1027799
+         [,1]
+A1  2.6618947
+A2 -2.7659487
+A3 -0.0416216
 \end{Soutput}
 \end{Schunk}
 \item Show that $\hat{A}_{1} = 2.7143$, $\hat{A}_{2} = -2.7143$ and $\hat{A}_{3} = 0$, provide a solution to the absorbed equations in (6)
-\begin{Schunk}
-\begin{Sinput}
-> t(Z) %*% M %*% Z + (Ainv * lambda)
-\end{Sinput}
-\begin{Soutput}
-     A1   A2 A3
-A1  5.5 -1.5 -2
-A2 -1.5  5.5 -2
-A3 -2.0 -2.0  5
-\end{Soutput}
-\begin{Sinput}
-> u
-\end{Sinput}
-\begin{Soutput}
-      [,1]
-A1  2.7143
-A2 -2.7143
-A3  0.0000
-\end{Soutput}
-\begin{Sinput}
-> (t(Z) %*% M %*% Z + (Ainv * lambda)) %*% u
-\end{Sinput}
-\begin{Soutput}
-       [,1]
-A1  19.0001
-A2 -19.0001
-A3   0.0000
-\end{Soutput}
-\begin{Sinput}
-> t(Z) %*% M %*% y
-\end{Sinput}
-\begin{Soutput}
-   [,1]
-A1   19
-A2  -19
-A3    0
-\end{Soutput}
-\end{Schunk}
+\begin{equation*}
+\left[\begin{tabular}{rrr}
+0.280 & 0.137 & 0.167 \\ 
+  0.137 & 0.280 & 0.167 \\ 
+  0.167 & 0.167 & 0.333 \\ 
+\end{tabular}\right]  \left[\begin{tabular}{r}2.7143\\-2.7143\\0\end{tabular}\right] =  \left[\begin{tabular}{r}
+19.0 \\ 
+  -19.0 \\ 
+  0.0 \\ 
+\end{tabular}\right]
+\end{equation*}
 \item Using the breeding values in (10), backsolve the solutions to $\hat{Y_{1}}$, $\hat{Y_{2}}$ and $\hat{Y_{3}}$
 \begin{Schunk}
 \begin{Sinput}
@@ -402,7 +303,7 @@ Calculate the first aproximations:
 \end{Sinput}
 \begin{Soutput}
          [,1]
-[1,] 47.61887
+[1,] 47.61905
 \end{Soutput}
 \begin{Sinput}
 > sigma2A <- (t(u) %*% Ainv %*% u + 
@@ -410,15 +311,15 @@ Calculate the first aproximations:
 > sigma2A
 \end{Sinput}
 \begin{Soutput}
-         [,1]
-[1,] 20.15421
+        [,1]
+[1,] 20.1542
 \end{Soutput}
 \begin{Sinput}
 > sigma2E/sigma2A
 \end{Sinput}
 \begin{Soutput}
          [,1]
-[1,] 2.362725
+[1,] 2.362736
 \end{Soutput}
 \end{Schunk}
 \end{enumerate}

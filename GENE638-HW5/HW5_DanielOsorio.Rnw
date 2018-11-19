@@ -63,11 +63,26 @@ A <- matrix(c(1,0.25,0.5,0.5,0,
               ), nrow = 5, byrow = TRUE)
 colnames(A) <- rownames(A) <- c("A1","A2","A3","M1","M2")
 Ainv <- solve(A)
-A
-round(Ainv,2)
 @
+\begin{equation*}
+A = \left[
+\begin{tabular}{rrr}
+1.00 & 0.25 & 0.50 \\ 
+  0.25 & 1.00 & 0.50 \\ 
+  0.50 & 0.50 & 1.00 \\ 
+\end{tabular}
+\right]\\
+\hspace{1cm}
+A^{-1} = \left[
+\begin{tabular}{rrr}
+1.33 & 0.00 & -0.67 \\ 
+  0.00 & 1.33 & -0.67 \\ 
+  -0.67 & -0.67 & 1.67 \\ 
+\end{tabular}
+\right]
+\end{equation*}
 \item The predicted breeding value of the unidentified parent of animal 1 is $\frac{2}{3}(\hat{A_{1}}-\frac{1}{2}\hat{A_{3}})$ and that for the unidentified parent of animal 2 is $\frac{2}{3}(\hat{A_{2}}-\frac{1}{2}\hat{A_{3}})$. Identify the base generation animals and show that $1'A^{-1}\hat{u} = 0$ is consistent with the sum of breeding values of base generation being 0.
-<<>>=
+<<echo=FALSE>>=
 X <- matrix(c(1,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,1), ncol = 3, byrow = FALSE)
 Z <- matrix(c(1,0,1,0,1,0,0,1,0,1,0,1,0,0,0,0,0,0,
               0,0,0,0,0,0,0,0,0,0,0,0), ncol = 5)
@@ -80,34 +95,99 @@ X1 <- rbind(
 y <- c(80,70,86,72,92,78)
 Y1 <- c(t(X) %*% y,t(Z) %*% y)
 u <- round(solve(X1) %*% Y1,2)
-rep(1,5) %*% (Ainv %*% u[4:8])
 @
+\begin{equation*}
+\left[
+\begin{tabular}{rrrrr}
+1 & 1 & 1 & 1& 1 \\ 
+\end{tabular}
+\right] \left[
+\begin{tabular}{rrrrr}
+2.00 & 0.00 & -1.00 & -1.00 & -0.00 \\ 
+  0.00 & 2.00 & -1.00 & -0.00 & -1.00 \\ 
+  -1.00 & -1.00 & 2.00 & 0.50 & 0.50 \\ 
+  -1.00 & -0.00 & 0.50 & 1.50 & 0.00 \\ 
+  -0.00 & -1.00 & 0.50 & 0.00 & 1.50 \\ 
+\end{tabular}
+\right] \left[\begin{tabular}{r}
+4.38 \\ 
+  -4.38 \\ 
+  0.00 \\ 
+  2.92 \\ 
+  -2.92 \\ 
+\end{tabular}
+\right] = -1.332268e-15
+\end{equation*}
+\begin{equation*}
+\begin{tabular}{rrrrr}
+ A1 & A2 & \textbf{A3} & \textbf{M1} & \textbf{M2} \\ 
+ 5.84 & -5.84 & 0.00 & 0.00 & 0.00 \\ 
+\end{tabular}
+\end{equation*}
 \item Write the data in general matrix terms $y = X\beta + Zu + e$ for the model $Y_{ij} = \text{Year}_{i} + \text{Animal}_{j} + e_{ij}$ where $\text{Year}_{i} = \mu + \text{Year}_{i}$. Include animal $3$ in $\hat{u}$ as in (2)
-<<>>=
-X
-Z[,1:3]
-@
+\begin{equation*}
+\left[\begin{tabular}{r}
+80\\ 
+  70 \\ 
+  86 \\ 
+  72 \\ 
+  92 \\ 
+  78 \\ 
+\end{tabular}\right] = \left[
+\begin{tabular}{rrr}
+1 & 0 & 0 \\ 
+  1 & 0 & 0 \\ 
+  0 & 1 & 0 \\ 
+  0 & 1 & 0 \\ 
+  0 & 0 & 1 \\ 
+  0 & 0 & 1 \\ 
+\end{tabular}
+\right] \left[\begin{tabular}{r}$\beta_{1}$\\$\beta_{2}$\\$\beta_{3}$\end{tabular}\right] +
+\left[
+\begin{tabular}{rrr}
+1 & 0 & 0 \\ 
+  0 & 1 & 0 \\ 
+  1 & 0 & 0 \\ 
+  0 & 1 & 0 \\ 
+  1 & 0 & 0 \\ 
+  0 & 1 & 0 \\ 
+\end{tabular}
+\right] \left[\begin{tabular}{r}$u_{1}$\\$u_{2}$\\$u_{3}$\end{tabular}\right] + \left[\begin{tabular}{r}$e_{11}$\\$e_{21}$\\$e_{12}$\\$e_{22}$\\$e_{13}$\\$e_{23}$\end{tabular}\right]
+\end{equation*}
 \item Assuming $R=I\sigma^{2}_{e}$ and $G = A\sigma^{2}_{a}$ and $\lambda = \frac{\sigma^{2}_{e}}{\sigma^{2}_{a}} = 3$, write the MME for model in (3)
-<<>>=
+<<echo=FALSE>>=
 lambda <- 3
 Z <- Z[,1:3]
 Ainv <- solve(A[1:3,1:3])
-
-Z
 X1 <- rbind(
   cbind(t(X) %*% X, t(X) %*% Z),
   cbind(t(Z) %*% X, t(Z) %*% Z + Ainv*lambda)
   )
 y <- c(80,70,86,72,92,78)
 Y1 <- c(t(X) %*% y,t(Z) %*% y)
-X1
-Y1
-round(solve(X1) %*% Y1,4)
 @
+\begin{equation*}
+\left[
+\begin{tabular}{rrrrrr}
+2 & 0 & 0 & 1 & 1 & 0 \\ 
+  0 & 2 & 0 & 1 & 1 & 0 \\ 
+  0 & 0 & 2 & 1 & 1 & 0 \\ 
+  1 & 1 & 1 & 7 & 0 & -2 \\ 
+  1 & 1 & 1 & 0 & 7 & -2 \\ 
+  0 & 0 & 0 & -2 & -2 & 5 \\ 
+\end{tabular}
+\right] \left[\begin{tabular}{r}$\beta_1$\\$\beta_2$\\$\beta_3$\\$u_1$\\$u_2$\\$u_3$\end{tabular}\right] = \left[
+\begin{tabular}{r}
+150 \\ 
+  158 \\ 
+  170 \\ 
+  258 \\ 
+  220 \\ 
+  0 \\ 
+\end{tabular}
+\right]
+\end{equation*}
 \item From the row of the MME corresponding to $\hat{A}_{3}$ show that $\hat{A}_{3} = \frac{2}{5}(\hat{A}_{1} + \hat{A}_{2})$
-<<>>=
-X1[6,]
-@
 \begin{equation*}
 \begin{split}
 0 &= -2\hat{A}_1 -2\hat{A}_2 + 5\hat{A}_3 \\
@@ -118,25 +198,34 @@ X1[6,]
 \end{split}
 \end{equation*}
 \item Absorb the year equations into the animal equations to obtain a system of equations involving only the unknown breeding values $\hat{A}_{1}, \hat{A}_{2},$ and $\hat{A}_{3}$
-<<>>=
+\begin{equation*}
+\left[\begin{tabular}{rrr}
+0.280 & 0.137 & 0.167 \\ 
+  0.137 & 0.280 & 0.167 \\ 
+  0.167 & 0.167 & 0.333 \\ 
+\end{tabular}\right]  \left[\begin{tabular}{r}$u_{1}$\\$u_{2}$\\$u_{3}$\end{tabular}\right] =  \left[\begin{tabular}{r}
+19.0 \\ 
+  -19.0 \\ 
+  0.0 \\ 
+\end{tabular}\right]
+\end{equation*}
+<<echo=FALSE>>=
 M <- diag(6) - (X %*% solve(t(X) %*% X) %*% t(X))
-M
 C22 <- t(Z) %*% M %*% Z + (Ainv * lambda)
-C22
 b <- t(Z) %*% M %*% y
-b
-u <- round(solve(t(Z) %*% M %*% Z + (Ainv * lambda)) %*% t(Z) %*% M %*% y,4)
-u
+u <- solve(C22) %*% b
 @
 \item What are the effective numbers of observations on all three animals?
 <<>>=
 diag(t(Z) %*% M %*% Z)
 @
 \item From the appropiate row of the absorbed MME, once again show that $\hat{A}_{3} = \frac{2}{5}(\hat{A}_{1} + \hat{A}_{2})$
-<<>>=
-C22[3,]
-@
 \begin{equation*}
+C_{22} = \left[\begin{tabular}{rrr}
+5.5 & -1.5 & -2.0 \\ 
+  -1.5 & 5.5 & -2.0 \\ 
+  -2.0 & -2.0 & 5.0 \\ 
+\end{tabular}\right]\\
 \begin{split}
 0 &= -2\hat{A}_1 -2\hat{A}_2 + 5\hat{A}_3 \\
 -5\hat{A}_3 &= -2\hat{A}_1 - 2\hat{A}_2 \\
@@ -146,26 +235,45 @@ C22[3,]
 \end{split}
 \end{equation*}
 \item Using ordinary Gauss-Seidel iteration, find two succesive aproximations to the predicted breeding values in (6)
+\begin{equation*}
+L = \left[\begin{tabular}{rrr}
+0.0 & 0.0 & 0.0 \\ 
+  -1.5 & 0.0 & 0.0 \\ 
+  -2.0 & -2.0 & 0.0 \\ 
+\end{tabular}\right] \hspace{1cm} D = \left[\begin{tabular}{rrr}
+5.5 & 0.0 & 0.0 \\ 
+  0.0 & 5.5 & 0.0 \\ 
+  0.0 & 0.0 & 5.0 \\ 
+\end{tabular}\right] \hspace{1cm} b = \left[\begin{tabular}{r}
+19.0 \\ 
+  -19.0 \\ 
+  0.0 \\ 
+\end{tabular}\right]
+\end{equation*}
 <<>>=
 L <- D <- matrix(0,nrow = nrow(C22), ncol = ncol(C22))
 L[lower.tri(L)] <- C22[lower.tri(C22)]
 diag(D) <- diag(C22)
-L
-D
 x0 <- solve(D) %*% b
 for(i in 1:2){
   Xi <- solve(L + D) %*% (b - t(L) %*% x0)
+  rownames(Xi) <- c("A1","A2","A3")
   print(Xi)
   x0 <- Xi
 }
 @
 \item Show that $\hat{A}_{1} = 2.7143$, $\hat{A}_{2} = -2.7143$ and $\hat{A}_{3} = 0$, provide a solution to the absorbed equations in (6)
-<<>>=
-t(Z) %*% M %*% Z + (Ainv * lambda)
-u
-(t(Z) %*% M %*% Z + (Ainv * lambda)) %*% u
-t(Z) %*% M %*% y
-@
+\begin{equation*}
+\left[\begin{tabular}{rrr}
+0.280 & 0.137 & 0.167 \\ 
+  0.137 & 0.280 & 0.167 \\ 
+  0.167 & 0.167 & 0.333 \\ 
+\end{tabular}\right]  \left[\begin{tabular}{r}2.7143\\-2.7143\\0\end{tabular}\right] =  \left[\begin{tabular}{r}
+19.0 \\ 
+  -19.0 \\ 
+  0.0 \\ 
+\end{tabular}\right]
+\end{equation*}
 \item Using the breeding values in (10), backsolve the solutions to $\hat{Y_{1}}$, $\hat{Y_{2}}$ and $\hat{Y_{3}}$
 <<>>=
 beta <- solve(t(X) %*% X) %*% t(X)%*%(y - Z %*% u)
