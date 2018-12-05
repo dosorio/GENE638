@@ -1,0 +1,133 @@
+\documentclass[12pt,a4paper]{paper}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{arydshln}
+\usepackage{amsfonts}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{vwcol}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage[left=1cm,right=1cm,top=1.5cm,bottom=2cm]{geometry}
+\allowdisplaybreaks
+\DeclareMathOperator{\var}{Var}
+\begin{document}
+\title{GENE638 - Exam 2\\\small{Daniel Osorio - dcosorioh@tamu.edu\\Department of Veterinary Integrative Biosciences\\Texas A\&M University}}
+\maketitle
+\SweaveOpts{concordance=TRUE}
+Multiple trait analyses are used to estimate the genetic correlations between traits and to increase the precision of genetic predictions when animals have relatively few observations. They can also be used to model the effects of selection, e.g., when only the genetically superior animals are permited to go on and have second and third records, etc.
+
+Suppose that the models for trait 1 and trait 2 can be written:
+\begin{equation}
+\begin{split}
+\underline{y_{1}} &= X_{1}\underline{\beta_{1}} + Z_{1}\underline{u_{1}} + \underline{e_{1}}\\
+\underline{y_{2}} &= X_{2}\underline{\beta_{2}} + Z_{2}\underline{u_{2}} + \underline{e_{2}}
+\end{split}
+\end{equation}
+Where:
+
+$\underline{y_{1}}$ and $\underline{y_{2}}$ are observations on traits 1 and 2 respectively. $X_{1}, X_{2}, Z_{1}$ and $Z_{2}$ are incidence matrices relating fixed and random effects to observations on each trait. $\underline{\beta_{1}}$ and $\underline{\beta_{2}}$ are fixed effects for traits 1 and 2 respectively. $\underline{u_{1}}$ and $\underline{u_{2}}$ are breeding values for traits 1 and 2 respectively, and $\underline{e_{1}}$ and $\underline{e_{2}}$ are residuals for traits 1 and 2 respectively.
+
+The two models in equation 1 can be combined to form the usual presentation of the mixed model as follows:
+\begin{equation}
+\begin{split}
+\left[\begin{tabular}{c}$\underline{y_{1}}$\\$\underline{y_{2}}$\end{tabular}\right] &= \left[\begin{tabular}{cc}$X_{1}$&0\\0&$X_{2}$\end{tabular}\right]\left[\begin{tabular}{c}$\underline{\beta_{1}}$\\$\underline{\beta_{2}}$\end{tabular}\right]+\left[\begin{tabular}{cc}$Z_{1}$&0\\0&$Z_{2}$\end{tabular}\right]\left[\begin{tabular}{c}$\underline{u_{1}}$\\$\underline{u_{2}}$\end{tabular}\right]+\left[\begin{tabular}{c}$\underline{e_{1}}$\\$\underline{e_{2}}$\end{tabular}\right]\\
+\end{split}
+\end{equation}
+\begin{equation}
+\begin{split}
+\underline{y} &= X\underline{\beta} + Z\underline{u} + \underline{e}
+\end{split}
+\end{equation}
+\begin{equation}
+\begin{split}
+\var(\underline{u}) &=  G = \var\left[\begin{tabular}{c}$\underline{u_{1}}$\\$\underline{u_{2}}$\end{tabular}\right] = \left[\begin{tabular}{cc}$A\sigma^{2}_{a_{1}}$&$A\sigma_{a_{12}}$\\$A\sigma_{a_{12}}$&$A\sigma^{2}_{a_{2}}$\end{tabular}\right]
+\end{split}
+\end{equation}
+For $A$ the relationship matrix, $\sigma^{2}_{a_1}$ and $\sigma^{2}_{a_2}$ are the additive genetic variances for trait 1 and 2 respectively and $\sigma^{2}_{a_{12}}$ the additive genetic covariance between trait 1 and 2.
+\begin{equation}
+\begin{split}
+\var(\underline{e}) &=  R = \var\left[\begin{tabular}{c}$\underline{e_{1}}$\\$\underline{e_{2}}$\end{tabular}\right] = \left[\begin{tabular}{cc}$I\sigma^{2}_{e_{1}}$&0\\0&$I\sigma^{2}_{e_{2}}$\end{tabular}\right]
+\end{split}
+\end{equation}
+For $I$ the identity matrix, $\sigma^{2}_{e_1}$ and $\sigma^{2}_{e_2}$ are the residual variances for traits 1 and 2 respectively, ans assuming no environmental covariance between traits 1 and 2.
+\begin{equation}
+G^{-1} = \left[\begin{tabular}{cc}$A^{-1}\alpha_{11}$ & $A^{-1}\alpha_{12}$\\$A^{-1}\alpha_{21}$ &$A^{-1}\alpha_{22}$\end{tabular}\right]
+\end{equation}
+for
+\begin{equation}
+\left[\begin{tabular}{cc}$\alpha_{11}$ &$\alpha_{12}$ \\$\alpha_{21}$ &$\alpha_{22}$\end{tabular}\right] = \left[\begin{tabular}{cc} $\sigma^{2}_{a1}$& $\sigma_{a12}$ \\ $\sigma_{a12}$ &$\sigma^{2}_{a2}$\end{tabular}\right]^{-1}
+\end{equation}
+\begin{enumerate}
+\item Assuming $\sigma^{2}_{e_1} = \sigma^{2}_{e_2} = 1$  in $R$ and $G^{-1}$ as above, write the mixed model equations for the \textsf{multiple trait model}. \textit{As the residuals are assumed to be independent in equation 5, I assumed that traits are also independent for each other}
+\begin{equation}
+\begin{split}
+\left[\begin{tabular}{cc}$X_{1}$&0\\0&$X_{2}$\end{tabular}\right]\left[\begin{tabular}{c}$\underline{\beta_{1}}$\\$\underline{\beta_{2}}$\end{tabular}\right]+\left[\begin{tabular}{cc}$Z_{1}$&0\\0&$Z_{2}$\end{tabular}\right]\left[\begin{tabular}{c}$\underline{u_{1}}$\\$\underline{u_{2}}$\end{tabular}\right]+\left[\begin{tabular}{c}$\underline{e_{1}}$\\$\underline{e_{2}}$\end{tabular}\right]&= \left[\begin{tabular}{c}$\underline{y_{1}}$\\$\underline{y_{2}}$\end{tabular}\right]\\
+\left[\begin{tabular}{cccc}
+$X_{1}'X_{1}$&0&$X_{1}'Z_{1}$&0\\
+0&$X_{2}'X_{2}$&0&$X_{2}'Z_{2}$\\
+$Z_{1}'X_{1}$&0&$Z_{1}'Z_{1} + A^{-1}\alpha_{11}$&$A^{-1}\alpha_{12}$\\
+0&$Z_{2}'X_{2}$&$A^{-1}\alpha_{21}$&$Z_{2}'Z_{2} + A^{-1}\alpha_{22}$
+\end{tabular}\right] \left[\begin{tabular}{c}$\underline{\hat{\beta_{1}}}$\\$\underline{\hat{\beta_{2}}}$\\$\underline{\hat{u_{1}}}$\\$\underline{\hat{u_{2}}}$\end{tabular}\right]&= \left[\begin{tabular}{c}
+$X_{1}\underline{y_{1}}$\\
+$X_{2}\underline{y_{2}}$\\
+$Z_{1}\underline{y_{1}}$\\
+$Z_{2}\underline{y_{2}}$
+\end{tabular}\right]
+\end{split}
+\end{equation}
+\item Write the two sets of mixed model equations that would have obtained if the two traits had been analyzed separately.
+\begin{equation}
+\left[\begin{tabular}{cc}$X_{1}'X_{1}$ & $X_{1}'Z$\\$Z'X_{1}$ & $Z'Z + A^{-1}\alpha_{11}$\end{tabular}\right]\left[\begin{tabular}{c}$\underline{\hat{\beta_1}}$\\$\underline{\hat{u}}$\end{tabular}\right] = \left[\begin{tabular}{c}$X_{1}'\underline{y}$\\$Z'\underline{y}$\end{tabular}\right]
+\end{equation}
+\begin{equation}
+\left[\begin{tabular}{cc}$X_{2}'X_{2}$ & $X_{2}'Z$\\$Z'X_{2}$ & $Z'Z + A^{-1}\alpha_{22}$\end{tabular}\right]\left[\begin{tabular}{c}$\underline{\hat{\beta_2}}$\\$\underline{\hat{u}}$\end{tabular}\right] = \left[\begin{tabular}{c}$X_{2}'\underline{y}$\\$Z'\underline{y}$\end{tabular}\right]
+\end{equation}
+\item Compare the systems of equations in questions 1 and 2. These systems could yield identical solutions under what conditions? \textit{If $\alpha_{12} = \alpha_{21} = 0$ which is only possible if the additive genetic components of variance for both measured traits are independent.}
+\begin{equation}
+\left[\begin{tabular}{cc}$X'X$ & $X'Z$\\$Z'X$ & $Z'Z + A^{-1}\lambda$\end{tabular}\right]\left[\begin{tabular}{c}$\underline{\hat{\beta}}$\\$\underline{\hat{u}}$\end{tabular}\right] = \left[\begin{tabular}{c}$X'\underline{y}$\\$Z'\underline{y}$\end{tabular}\right]
+\end{equation}
+\item In the information from MME like these immediately above, how are the accuracy values of the elements in $\underline{\hat{u}}$ determined? \textit{Accuracy are computed as the correlation between EBV ($\underline{\hat{u}}$ values) and the true breeding value, or also as the $\sqrt{reliability}$ which is the fraction of the additive genetic variance accounted by the EBV.}
+\item Same equations, why is $\lambda = \frac{\sigma^{2}_{e}}{\sigma^{2}_{a}}$? \textit{Because from MME:}
+\begin{equation}
+\begin{split}
+\left[\begin{tabular}{cc}
+$X'R^{-1}X$&$X'R^{-1}Z$\\
+$Z'R^{-1}X$&$Z'R^{-1}Z + A^{-1}\frac{1}{\sigma^{2}_{a}}$\\
+\end{tabular}\right] \left[\begin{tabular}{c}
+$\underline{\hat{\beta}}$\\
+$\underline{\hat{u}}$
+\end{tabular}\right] &= \left[\begin{tabular}{c}
+$X'R^{-1}\underline{y}$\\
+$Z'R^{-1}\underline{y}$
+\end{tabular}\right]\\
+\end{split}
+\end{equation}
+\textit{and taking $R = I\sigma^{2}_{e}$, we can simplify:}
+\begin{equation}
+\begin{split}
+\left[\begin{tabular}{cc}
+$X'X$&$X'Z$\\
+$Z'X$&$Z'Z + A^{-1}\frac{\sigma^{2}_{e}}{\sigma^{2}_{a}}$\\
+\end{tabular}\right] \left[\begin{tabular}{c}
+$\underline{\hat{\beta}}$\\
+$\underline{\hat{u}}$
+\end{tabular}\right] &= \left[\begin{tabular}{c}
+$X'\underline{y}$\\
+$Z'\underline{y}$
+\end{tabular}\right]\\
+\end{split}
+\end{equation}
+\item Describe briefly the two general ways that genomic information has been included in prediction of genetic merit for livestock.
+\begin{enumerate}
+\item \textit{As replacement of the Z matrix in the MME: In this procedure, assuming common residual variance across all marker loci, a matrix of numerically encoded markers (each one represented in a column) with rows equal to individuals (called M) is used as replacement of Z and used to compute the G matrix (assuming that each marker is independent and has their individual variance). Both matrices (M and G) are used then in the computation of the genomic relationship matrix to be used as a replacement of $A^{-1}\lambda$ in the MME equations as follows:}
+\begin{equation}
+\left[\begin{tabular}{cc}$X'X$&$X'I$\\$I'X$&$I + \sigma^{2}_{e}\left[MGM'\right]^{-1}$\end{tabular}\right]\left[\begin{tabular}{c}$\underline{\hat{\beta}}$\\$\underline{\hat{u}}$\end{tabular}\right] = \left[\begin{tabular}{c}$X'\underline{y}$\\$I'\underline{y}$\end{tabular}\right]
+\end{equation}
+\textit{In this procedure, the computed values of $\underline{\hat{u}}$ are the expected breeding values for each individual.}
+\item \textit{As the sum of the effect of informative haplotype markers after independent marker selection: This procedure assume that all markers ($g_{i}$) are independent each other and have common variance $\sigma^{2}_{g}$, then the breeding value for each marker is computed as in least squares by $\underline{\hat{g}} = (X'X+ \lambda I)^{-1}X'\underline{y}$ where $\lambda$ is a penalization factor used to select only highly informative markers. In this procedure, the expected breeding values for each individual are equal to ($\Sigma_{i=1}^{n}X_{i}\underline{\hat{g}_{i}}$) the sum of the breeding values of all markers in a given individual.}
+\end{enumerate}
+\end{enumerate}
+\end{document}
